@@ -1,11 +1,15 @@
 package pg.autyzm.graprzyjazneemocje;
 
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.SweepGradient;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -67,9 +71,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         setContentView(R.layout.activity_main);
 
-
-
         sqlm = getInstance(this);
+
 
         sqlm.getReadableDatabase();
 
@@ -278,6 +281,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     }
 
+   @SuppressLint("ResourceType")
     void generateView(List<String> photosList){
 
 
@@ -331,6 +335,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
 
+   @SuppressLint("ResourceType")
     public void onClick(View v) {
 
 
@@ -491,6 +496,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
                 }
+               @SuppressLint("ResourceType")
                 public void onFinish() {
                     LinearLayout imagesLinear = (LinearLayout)findViewById(R.id.imageGallery);
 

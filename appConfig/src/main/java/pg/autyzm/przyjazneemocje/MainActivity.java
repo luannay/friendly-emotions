@@ -1,5 +1,7 @@
 package pg.autyzm.przyjazneemocje;
 
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Boolean> active_list;
 
 
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

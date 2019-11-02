@@ -25,7 +25,12 @@ public class SqlliteManager extends SQLiteOpenHelper {
         // Use the application context, which will ensure that you
         // don't accidentally leak an Activity's context.
         // See this article for more information: http://bit.ly/6LRzfx
+
+        System.out.println("Tworze ania3");
+        System.out.println(context.getApplicationContext().getPackageResourcePath());
         if (sInstance == null) {
+
+
             sInstance = new SqlliteManager(context.getApplicationContext());
         }
         return sInstance;
@@ -34,7 +39,11 @@ public class SqlliteManager extends SQLiteOpenHelper {
 
     private SqlliteManager (final Context context)
     {
+
+
         super(new DatabaseContext(context), DATABASE_NAME, null, 2);
+
+        System.out.println("Tworze ania2");
         db = getWritableDatabase();
     }
 
