@@ -26,8 +26,8 @@ public class SqlliteManager extends SQLiteOpenHelper {
         // don't accidentally leak an Activity's context.
         // See this article for more information: http://bit.ly/6LRzfx
 
-        System.out.println("Tworze ania3");
-        System.out.println(context.getApplicationContext().getPackageResourcePath());
+       // System.out.println("Tworze ania3");
+       // System.out.println(context.getApplicationContext().getPackageResourcePath());
         if (sInstance == null) {
 
 
@@ -43,7 +43,7 @@ public class SqlliteManager extends SQLiteOpenHelper {
 
         super(new DatabaseContext(context), DATABASE_NAME, null, 2);
 
-        System.out.println("Tworze ania2");
+        //System.out.println("Tworze ania2");
         db = getWritableDatabase();
     }
 
@@ -59,6 +59,8 @@ public class SqlliteManager extends SQLiteOpenHelper {
                 "time_limit int, is_level_active boolean, name text, correctness int, sublevels int);" + "");
         db.execSQL("create table levels_photos(" + "id integer primary key autoincrement,"  + "levelid integer references levels(id)," + "photoid integer references photos(id));" + "");
         db.execSQL("create table levels_emotions(" + "id integer primary key autoincrement," + "levelid integer references levels(id),"  + "emotionid integer references emotions(id));" + "");
+        //ania dodaje probujac zmienic jezyk:
+   //   db.execSQL("create table language(" + "id integer primary key autoincrement," +  "language text);" + "");
 
 
         addEmotion("happy");
@@ -108,6 +110,8 @@ public class SqlliteManager extends SQLiteOpenHelper {
         values.put("is_level_active", level.isLevelActive());
         values.put("correctness", level.getCorrectness());
         values.put("sublevels", level.getSublevels());
+        //ania
+    //   values.put("language",level.getLanguage());
 
 
         if(level.getId() != 0) {

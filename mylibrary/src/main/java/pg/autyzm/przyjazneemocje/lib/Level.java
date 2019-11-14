@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Ann on 25.10.2016.
@@ -18,6 +19,8 @@ public class Level {
     private boolean isLevelActive;
     private int sublevels;
     private int correctness;
+   private String language;
+    //private String language;
 
     private String name;
 
@@ -45,6 +48,9 @@ public class Level {
 
             setLevelActive((active != 0));
             setName(cur.getString(cur.getColumnIndex("name")));
+
+            //ania probuje
+  //       setLanguage(cur.getString(cur.getColumnIndex("language")));
         }
 
         if(cur2 != null){
@@ -146,6 +152,10 @@ public class Level {
     public List<Integer> getPhotosOrVideosList() {
         return photosOrVideosList;
     }
+
+    //ania probuje:
+  // public String getLanguage() {return language;}
+  // public void setLanguage (String language) {this.language = language;}
 
     public void setPhotosOrVideosList(List<Integer> photosOrVideosList) {
         this.photosOrVideosList = photosOrVideosList;

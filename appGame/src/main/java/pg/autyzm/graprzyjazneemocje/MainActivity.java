@@ -4,8 +4,12 @@ package pg.autyzm.graprzyjazneemocje;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.drm.DrmStore;
 import android.graphics.Bitmap;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -14,6 +18,8 @@ import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -24,11 +30,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.provider.MediaStore.Images.Media;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import pg.autyzm.przyjazneemocje.lib.Level;
@@ -48,6 +56,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     String goodAnswer;
     Cursor cur0;
     SqlliteManager sqlm;
+    String myLocale;
     int wrongAnswers;
     int rightAnswers;
     int wrongAnswersSublevel;
@@ -55,21 +64,41 @@ public class MainActivity extends Activity implements View.OnClickListener {
     int timeout;
     int timeoutSubLevel;
     String commandText;
+    //to na 99 proent zle String language;
     boolean animationEnds = true;
     Level l;
     CountDownTimer timer;
     public Speaker speaker;
-
-
+    String language;
+    //ActionBar actionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+// https://stackoverflow.com/questions/2900023/change-app-language-programmatically-in-android
+        String languageToLoad  = "en"; // your language
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+       // this.setContentView(R.layout.main);   //czy activitymain? nie wiadomo
+
+
+
+        // jak to ugryzc AAAAAAAAAAAAAAAAA setLocale(language);
+
+        //actionBar.setTitle(getResources().getString(R.string.app_name));
+
+//stLocale(myLocale);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
+
+
 
         sqlm = getInstance(this);
 
@@ -99,9 +128,45 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
     }
+/**
+    private void setLocale(Locale currentLocale) {
+        currentLocale.equals(myLocale);
+
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = currentLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, MainActivity.class);
+        refresh.putExtra(myLocale, currentLocale);
+        startActivity(refresh);
 
 
-        boolean findNextActiveLevel(){
+
+    }
+**/
+/*
+private void setLocale(String lang) {
+    Locale locale = new Locale(lang);
+    Locale.setDefault(locale);
+    Configuration config = new Configuration();
+    config.locale = locale;
+    getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
+    SharedPreferences.Editor editor = getSharedPreferences("Settings",MODE_PRIVATE).edit();
+    editor.putString("My_Lang",lang);
+    editor.apply();
+}
+
+
+public void loadLocale() {
+
+    SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+    String language = prefs.getString("My_Lang", "");
+    setLocale(language);
+}
+*/
+
+    boolean findNextActiveLevel(){
 
             if(sublevelsLeft != 0){
                 generateSublevel(sublevelsList.get(sublevelsLeft - 1));

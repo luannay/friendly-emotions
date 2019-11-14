@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Przyjazne Emocje - Konfiguracja</string>
-    <string name="newPhoto">Zrób nowe</string>
+    <string name="newPhoto">Zrób nowe zdjęcie</string>
     <string name="label_choose_images">Wybierz</string>
     <string name="title_choose_img">Wybierz zdjęcia</string>
     <string name="default_message">Nie wybrano zdjęć</string>
