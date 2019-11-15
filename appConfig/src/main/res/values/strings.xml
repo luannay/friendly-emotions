@@ -22,11 +22,17 @@
     <string name="emotion_angry">zły</string>
     <string name="emotion_scared">przestraszony</string>
     <string name="emotion_bored">znudzony</string>
-
+    <string name="textView5">Wybierz język:</string>
     <array name="spinner">
         <item>Zdjęcia</item>
         <item>Filmy</item>
     </array>
 
+
+    <array name="spinner3">
+        <item>Wybierz język: </item>
+        <item>English</item>
+        <item>Polski</item>
+    </array>
 
 </resources>

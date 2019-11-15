@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="pg.autyzm.przyjazneemocje.MainActivity">
 
 
@@ -15,8 +16,8 @@
         android:id="@+id/button"
         android:layout_width="80dip"
         android:layout_height="80dip"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:layout_margin="20dp"
         android:background="@null"
         android:onClick="sendMessage"
@@ -25,12 +26,17 @@
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="259dp"
-        android:layout_height="270dp"
-        android:layout_below="@+id/list_text"
+        android:layout_width="573dp"
+        android:layout_height="322dp"
+        android:layout_above="@+id/spinner2"
+        android:layout_below="@+id/imageView2"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="50dp"
         android:layout_toLeftOf="@+id/button">
 
     </ListView>
@@ -38,23 +44,68 @@
     <TextView
         android:id="@+id/list_text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/list"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="222dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:width="300dp"
+        android:height="50dp"
+        android:minHeight="50dp"
         android:text="@string/label_level_list"
         android:textSize="25sp" />
 
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/textView5"
+        android:textSize="30sp"
+        tools:text="wybierz jeyzk" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="104dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/textView5"
+        android:layout_toRightOf="@+id/textView5"
+        app:srcCompat="@drawable/country_flag_pl" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="43dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_toRightOf="@+id/imageView"
+        app:srcCompat="@drawable/country_flag_en" />
+
     <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="207dp"
-        android:layout_height="56dp"
+        android:id="@+id/spinner3"
+        android:layout_width="332dp"
+        android:layout_height="67dp"
         android:layout_below="@+id/list"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentLeft="false"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="34dp"
-        android:layout_marginLeft="34dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="185dp"
-        android:layout_marginRight="185dp" />
+        android:layout_alignParentRight="false"
+        android:layout_marginStart="171dp"
+        android:layout_marginLeft="190dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="587dp"
+        android:layout_marginRight="296dp"
+        android:entries="@array/spinner3" />
 </RelativeLayout>

@@ -16,6 +16,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -34,17 +35,17 @@ import static pg.autyzm.przyjazneemocje.lib.SqlliteManager.getInstance;
 
 public class MainActivity extends AppCompatActivity {
     Spinner spinner;
-    Locale myLocale;
+    protected Locale myLocale;
     String currentLanguage = "pl", currentLang;
     //ActionBar actionBar2 = getSupportActionBar();
 
+    ImageView countryPl;
+    ImageView countryEn;
 
 
     public SqlliteManager sqlm;
     ArrayList<String> list;
     ArrayList<Boolean> active_list;
-
-
 
 
     @SuppressLint("WrongThread")
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //actionBar2.setTitle(getResources().getString(R.string.app_name));
+
+
         sqlm = getInstance(this);
 
         updateLevelList();
@@ -114,10 +117,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
+        countryPl = (ImageView) findViewById(R.id.imageView);
+        countryPl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocale("pl");
+            }
+        });
+        countryEn = (ImageView) findViewById(R.id.imageView2);
+        countryEn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocale("en");
+            }
+        });
         currentLanguage = getIntent().getStringExtra(currentLang);
 
-        spinner = (Spinner) findViewById(R.id.spinner);
+        spinner = (Spinner) findViewById(R.id.spinner3);
 
         List<String> lista = new ArrayList<String>();
 

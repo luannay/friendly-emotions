@@ -41,6 +41,9 @@ import java.util.Random;
 
 import pg.autyzm.przyjazneemocje.lib.Level;
 import pg.autyzm.przyjazneemocje.lib.SqlliteManager;
+import pg.autyzm.przyjazneemocje.*;
+
+
 
 import static pg.autyzm.przyjazneemocje.lib.SqlliteManager.getInstance;
 
@@ -56,7 +59,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     String goodAnswer;
     Cursor cur0;
     SqlliteManager sqlm;
-    String myLocale;
     int wrongAnswers;
     int rightAnswers;
     int wrongAnswersSublevel;
@@ -64,6 +66,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     int timeout;
     int timeoutSubLevel;
     String commandText;
+    String myLocale;
     //to na 99 proent zle String language;
     boolean animationEnds = true;
     Level l;
@@ -76,6 +79,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 // https://stackoverflow.com/questions/2900023/change-app-language-programmatically-in-android
         String languageToLoad  = "en"; // your language
+
         Locale locale = new Locale(languageToLoad);
         Locale.setDefault(locale);
         Configuration config = new Configuration();

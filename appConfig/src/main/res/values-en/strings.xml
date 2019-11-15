@@ -22,11 +22,15 @@
     <string name="emotion_angry">angry</string>
     <string name="emotion_scared">scared</string>
     <string name="emotion_bored">bored</string>
-
+    <string name="textView5">Choose language:</string>
     <string-array name="spinner">
         <item>Photos</item>
         <item>Videos</item>
     </string-array>
 
-
+    <array name="spinner3">
+        <item>Choose language: </item>
+        <item>English</item>
+        <item>Polski</item>
+    </array>
 </resources>

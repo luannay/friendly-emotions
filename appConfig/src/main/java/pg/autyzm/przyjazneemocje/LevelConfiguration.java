@@ -2,6 +2,8 @@ package pg.autyzm.przyjazneemocje;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -196,6 +198,7 @@ public class LevelConfiguration extends AppCompatActivity implements View.OnClic
     {
 
 
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         public void onCheckedChanged(CompoundButton buttonView,boolean isChecked)
         {
