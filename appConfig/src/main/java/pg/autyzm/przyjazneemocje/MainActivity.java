@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -34,15 +33,10 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 import static pg.autyzm.przyjazneemocje.lib.SqlliteManager.getInstance;
 
 public class MainActivity extends AppCompatActivity {
-    Spinner spinner;
     protected Locale myLocale;
     String currentLanguage = "pl", currentLang;
-    //ActionBar actionBar2 = getSupportActionBar();
-
-    ImageView countryPl;
     ImageView countryEn;
-
-
+    ImageView countryPl;
     public SqlliteManager sqlm;
     ArrayList<String> list;
     ArrayList<Boolean> active_list;
@@ -53,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //actionBar2.setTitle(getResources().getString(R.string.app_name));
-
 
         sqlm = getInstance(this);
 
@@ -117,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
         countryPl = (ImageView) findViewById(R.id.imageView);
         countryPl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
         });
         currentLanguage = getIntent().getStringExtra(currentLang);
 
-        spinner = (Spinner) findViewById(R.id.spinner3);
-
+        //spinner = (Spinner) findViewById(R.id.spinner3);
+/*
         List<String> lista = new ArrayList<String>();
 
         lista.add("Wybierz język:");
@@ -142,11 +135,16 @@ public class MainActivity extends AppCompatActivity {
         lista.add("Polski");
 
 
+
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lista);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        */
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //spinner.setAdapter(adapter);
+
+        //spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 switch (position) {
@@ -160,12 +158,13 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                 }
-            }
+    }
+    */
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
+        //  @Override
+        // public void onNothingSelected(AdapterView<?> adapterView) {
+        // }
+        //    });
     }
 
     public void setLocale(String localeName) {
@@ -191,8 +190,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         System.exit(0);
-        }
-
+    }
 
 
     // napisuje, bo chce, by po dodaniu poziomu lista poziomow w main activity automatycznie sie odswiezala - Pawel
@@ -203,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         //Refresh your stuff here
 
         updateLevelList();
-        
+
     }
 
     public boolean IfConstainsEmotionName(String inputString)

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Przyjazne Emocje - Konfiguracja</string>
-    <string name="newPhoto">Zrób nowe zdjęcie</string>
+    <string name="newPhoto">Zrób nowe</string>
     <string name="label_choose_images">Wybierz</string>
     <string name="title_choose_img">Wybierz zdjęcia</string>
     <string name="default_message">Nie wybrano zdjęć</string>
@@ -22,17 +22,12 @@
     <string name="emotion_angry">zły</string>
     <string name="emotion_scared">przestraszony</string>
     <string name="emotion_bored">znudzony</string>
-    <string name="textView5">Wybierz język:</string>
+    <string name="language_choice">wybierz język:</string>
+
     <array name="spinner">
         <item>Zdjęcia</item>
         <item>Filmy</item>
     </array>
 
-
-    <array name="spinner3">
-        <item>Wybierz język: </item>
-        <item>English</item>
-        <item>Polski</item>
-    </array>
 
 </resources>

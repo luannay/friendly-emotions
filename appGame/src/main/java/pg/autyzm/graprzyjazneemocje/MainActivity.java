@@ -4,22 +4,17 @@ package pg.autyzm.graprzyjazneemocje;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.drm.DrmStore;
 import android.graphics.Bitmap;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.content.res.Configuration;
 import android.graphics.SweepGradient;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -30,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.provider.MediaStore.Images.Media;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,9 +35,6 @@ import java.util.Random;
 
 import pg.autyzm.przyjazneemocje.lib.Level;
 import pg.autyzm.przyjazneemocje.lib.SqlliteManager;
-import pg.autyzm.przyjazneemocje.*;
-
-
 
 import static pg.autyzm.przyjazneemocje.lib.SqlliteManager.getInstance;
 
@@ -66,18 +57,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
     int timeout;
     int timeoutSubLevel;
     String commandText;
-    String myLocale;
-    //to na 99 proent zle String language;
     boolean animationEnds = true;
     Level l;
     CountDownTimer timer;
     public Speaker speaker;
-    String language;
-    //ActionBar actionBar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-// https://stackoverflow.com/questions/2900023/change-app-language-programmatically-in-android
         String languageToLoad  = "en"; // your language
 
         Locale locale = new Locale(languageToLoad);
@@ -86,23 +74,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
-       // this.setContentView(R.layout.main);   //czy activitymain? nie wiadomo
-
-
-
-        // jak to ugryzc AAAAAAAAAAAAAAAAA setLocale(language);
-
-        //actionBar.setTitle(getResources().getString(R.string.app_name));
-
-//stLocale(myLocale);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
-
-
 
         sqlm = getInstance(this);
 
@@ -132,131 +108,95 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
     }
-/**
-    private void setLocale(Locale currentLocale) {
-        currentLocale.equals(myLocale);
 
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = currentLocale;
-        res.updateConfiguration(conf, dm);
-        Intent refresh = new Intent(this, MainActivity.class);
-        refresh.putExtra(myLocale, currentLocale);
-        startActivity(refresh);
-
-
-
-    }
-**/
-/*
-private void setLocale(String lang) {
-    Locale locale = new Locale(lang);
-    Locale.setDefault(locale);
-    Configuration config = new Configuration();
-    config.locale = locale;
-    getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
-    SharedPreferences.Editor editor = getSharedPreferences("Settings",MODE_PRIVATE).edit();
-    editor.putString("My_Lang",lang);
-    editor.apply();
-}
-
-
-public void loadLocale() {
-
-    SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
-    String language = prefs.getString("My_Lang", "");
-    setLocale(language);
-}
-*/
 
     boolean findNextActiveLevel(){
 
-            if(sublevelsLeft != 0){
-                generateSublevel(sublevelsList.get(sublevelsLeft - 1));
+        if(sublevelsLeft != 0){
+            generateSublevel(sublevelsList.get(sublevelsLeft - 1));
+            return true;
+        }
+
+        // zaraz zostanie zaladowany nowy poziom (skonczyly sie podpoziomy. trzeba ustalic, czy dziecko odpowiedzialo wystarczajaco dobrze, by przejsc dalej
+
+        while(cur0.moveToNext()){
+
+            if(! loadLevel()){
+                continue;
+            }
+            else{
                 return true;
             }
+        }
 
-            // zaraz zostanie zaladowany nowy poziom (skonczyly sie podpoziomy. trzeba ustalic, czy dziecko odpowiedzialo wystarczajaco dobrze, by przejsc dalej
+        return false;
 
-            while(cur0.moveToNext()){
+    }
 
-                if(! loadLevel()){
-                    continue;
-                }
-                else{
-                    return true;
-                }
+    boolean loadLevel(){
+
+
+        wrongAnswersSublevel = 0;
+        rightAnswersSublevel = 0;
+        timeoutSubLevel = 0;
+
+
+
+
+        int levelId = 0;
+        int photosPerLvL = 0;
+        l = null;
+
+        System.out.println(cur0.getCount());
+
+
+
+
+        levelId = cur0.getInt(cur0.getColumnIndex("id"));
+
+        Cursor cur2 = sqlm.giveLevel(levelId);
+        Cursor cur3 = sqlm.givePhotosInLevel(levelId);
+        Cursor cur4 = sqlm.giveEmotionsInLevel(levelId);
+
+        l = new Level(cur2, cur3, cur4);
+
+        photosPerLvL = l.getPvPerLevel();
+
+
+        if(!l.isLevelActive()) return false;
+
+
+        // tworzymy tablice do permutowania
+
+        sublevelsLeft = l.getEmotions().size() * l.getSublevels();
+
+        sublevelsList = new ArrayList<Integer>();
+
+        for(int i = 0; i < l.getEmotions().size(); i++){
+
+            for(int j = 0; j < l.getSublevels(); j++){
+
+                sublevelsList.add(l.getEmotions().get(i));
+
             }
-
-            return false;
 
         }
 
-        boolean loadLevel(){
-
-
-            wrongAnswersSublevel = 0;
-            rightAnswersSublevel = 0;
-            timeoutSubLevel = 0;
+        java.util.Collections.shuffle(sublevelsList);
 
 
 
-
-            int levelId = 0;
-            int photosPerLvL = 0;
-            l = null;
-
-            System.out.println(cur0.getCount());
+        generateSublevel(sublevelsList.get(sublevelsLeft - 1));
 
 
 
 
-            levelId = cur0.getInt(cur0.getColumnIndex("id"));
-
-            Cursor cur2 = sqlm.giveLevel(levelId);
-            Cursor cur3 = sqlm.givePhotosInLevel(levelId);
-            Cursor cur4 = sqlm.giveEmotionsInLevel(levelId);
-
-            l = new Level(cur2, cur3, cur4);
-
-            photosPerLvL = l.getPvPerLevel();
-
-
-            if(!l.isLevelActive()) return false;
-
-
-            // tworzymy tablice do permutowania
-
-            sublevelsLeft = l.getEmotions().size() * l.getSublevels();
-
-            sublevelsList = new ArrayList<Integer>();
-
-            for(int i = 0; i < l.getEmotions().size(); i++){
-
-                for(int j = 0; j < l.getSublevels(); j++){
-
-                    sublevelsList.add(l.getEmotions().get(i));
-
-                }
-
-            }
-
-            java.util.Collections.shuffle(sublevelsList);
+        // wylosuj emocje z wybranych emocji, odczytaj jej imie (bo mamy liste id)
+        //int emotionIndexInList = selectEmotionToChoose(l);
 
 
 
-             generateSublevel(sublevelsList.get(sublevelsLeft - 1));
-
-
-
-
-            // wylosuj emocje z wybranych emocji, odczytaj jej imie (bo mamy liste id)
-            //int emotionIndexInList = selectEmotionToChoose(l);
-
-
-
-            return true;
+        return true;
 
     }
 
@@ -350,12 +290,12 @@ public void loadLocale() {
 
     }
 
-   @SuppressLint("ResourceType")
+    @SuppressLint("ResourceType")
     void generateView(List<String> photosList){
 
 
         TextView txt = (TextView) findViewById(R.id.rightEmotion);
-       // txt.setTextSize(TypedValue.COMPLEX_UNIT_PX,100);
+        // txt.setTextSize(TypedValue.COMPLEX_UNIT_PX,100);
         String rightEm = goodAnswer.replace(".jpg","").replaceAll("[0-9.]", "");
         String rightEmotionLang = getResources().getString(getResources().getIdentifier("emotion_" + rightEm, "string", getPackageName()));
         commandText = getResources().getString(R.string.label_show_emotion) + " " + rightEmotionLang;
@@ -404,7 +344,7 @@ public void loadLocale() {
     }
 
 
-   @SuppressLint("ResourceType")
+    @SuppressLint("ResourceType")
     public void onClick(View v) {
 
 
@@ -473,16 +413,16 @@ public void loadLocale() {
 
 
 
-/*
-    int selectEmotionToChoose(Level l){
+    /*
+        int selectEmotionToChoose(Level l){
 
-        Random rand = new Random();
+            Random rand = new Random();
 
-        int emotionIndexInList = rand.nextInt(l.emotions.size());
+            int emotionIndexInList = rand.nextInt(l.emotions.size());
 
-        return emotionIndexInList;
-    }
-*/
+            return emotionIndexInList;
+        }
+    */
     String selectPhotoWithSelectedEmotion(){
 
         Random rand = new Random();
@@ -565,7 +505,7 @@ public void loadLocale() {
 
 
                 }
-               @SuppressLint("ResourceType")
+                @SuppressLint("ResourceType")
                 public void onFinish() {
                     LinearLayout imagesLinear = (LinearLayout)findViewById(R.id.imageGallery);
 

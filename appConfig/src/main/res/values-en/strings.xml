@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Frendly Emotions - Configuration</string>
+    <string name="app_name">Friendly Emotions - Configuration</string>
     <string name="newPhoto">Take a new photo</string>
     <string name="label_choose_images">Choose</string>
     <string name="title_choose_img">Choose photos</string>
@@ -22,15 +22,11 @@
     <string name="emotion_angry">angry</string>
     <string name="emotion_scared">scared</string>
     <string name="emotion_bored">bored</string>
-    <string name="textView5">Choose language:</string>
+    <string name="language_choice">choose language:</string>
     <string-array name="spinner">
         <item>Photos</item>
         <item>Videos</item>
     </string-array>
 
-    <array name="spinner3">
-        <item>Choose language: </item>
-        <item>English</item>
-        <item>Polski</item>
-    </array>
+
 </resources>
