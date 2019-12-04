@@ -41,7 +41,7 @@ public class DatabaseContext extends ContextWrapper {
         return result;
     }
 
-    
+
     @Override
     public SQLiteDatabase openOrCreateDatabase(String name, int mode, SQLiteDatabase.CursorFactory factory, DatabaseErrorHandler errorHandler) {
         return openOrCreateDatabase(name,mode, factory);

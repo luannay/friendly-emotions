@@ -21,10 +21,10 @@ import pg.autyzm.przyjazneemocje.lib.SqlliteManager;
 import static pg.autyzm.przyjazneemocje.lib.SqlliteManager.getInstance;
 
 public class CustomList extends BaseAdapter implements ListAdapter {
+    public SqlliteManager sqlm;
     private ArrayList<String> list = new ArrayList<String>();
     private ArrayList<Boolean> active_list = new ArrayList<Boolean>();
     private Context context;
-    public SqlliteManager sqlm;
 
 
     public CustomList(ArrayList<String> list, ArrayList<Boolean> active_list, Context context) {
@@ -60,22 +60,19 @@ public class CustomList extends BaseAdapter implements ListAdapter {
         }
 
         //Handle TextView and display string from your list
-        TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
+        TextView listItemText = view.findViewById(R.id.list_item_string);
         listItemText.setText(list.get(position));
 
 
-
         //Handle buttons and add onClickListeners
-        ImageButton deleteBtn = (ImageButton)view.findViewById(R.id.delete_btn);
-        ImageButton editBtn = (ImageButton)view.findViewById(R.id.edit_btn);
+        ImageButton deleteBtn = view.findViewById(R.id.delete_btn);
+        ImageButton editBtn = view.findViewById(R.id.edit_btn);
 
-        CheckBox activeChck = (CheckBox) view.findViewById(R.id.active_chck);
-
+        CheckBox activeChck = view.findViewById(R.id.active_chck);
 
         activeChck.setChecked(active_list.get(position));
 
-
-        deleteBtn.setOnClickListener(new View.OnClickListener(){
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //do something
@@ -89,7 +86,7 @@ public class CustomList extends BaseAdapter implements ListAdapter {
                 notifyDataSetChanged();
             }
         });
-        editBtn.setOnClickListener(new View.OnClickListener(){
+        editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //do something
@@ -108,16 +105,11 @@ public class CustomList extends BaseAdapter implements ListAdapter {
                 context.startActivity(intent);
 
 
-
                 notifyDataSetChanged();
             }
         });
 
-
-
-
-
-        activeChck.setOnClickListener(new View.OnClickListener(){
+        activeChck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //do something
@@ -131,16 +123,14 @@ public class CustomList extends BaseAdapter implements ListAdapter {
 
                     */
 
-
-
                 Cursor cur2 = sqlm.giveLevel(findLevelId(position));
                 Cursor cur3 = sqlm.givePhotosInLevel(findLevelId(position));
                 Cursor cur4 = sqlm.giveEmotionsInLevel(findLevelId(position));
 
                 Level l = new Level(cur2, cur3, cur4);
 
-                l.setLevelActive(! l.isLevelActive());
-               // l.isLevelActive = ! l.isLevelActive;
+                l.setLevelActive(!l.isLevelActive());
+                // l.isLevelActive = ! l.isLevelActive;
                 active_list.set(position, l.isLevelActive());
 
                 //
@@ -150,25 +140,16 @@ public class CustomList extends BaseAdapter implements ListAdapter {
                 notifyDataSetChanged();
             }
         });
-
-
-
-
         return view;
     }
 
 
-    int findLevelId(int position){
+    int findLevelId(int position) {
 
         String levelString = list.get(position);
 
-
         String[] splittedLevelString = levelString.split(" ");
-        int levelId = Integer.parseInt(splittedLevelString[0]);
-
-
-        return levelId;
-
+        return Integer.parseInt(splittedLevelString[0]);
     }
 
 }

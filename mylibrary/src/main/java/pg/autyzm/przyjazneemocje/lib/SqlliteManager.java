@@ -8,9 +8,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 public class SqlliteManager extends SQLiteOpenHelper {
 
+    private static final String TAG = "SqlliteManager";
     private static SqlliteManager sInstance;
 
     private static final String DATABASE_NAME = "przyjazneemocje";
@@ -26,8 +30,8 @@ public class SqlliteManager extends SQLiteOpenHelper {
         // don't accidentally leak an Activity's context.
         // See this article for more information: http://bit.ly/6LRzfx
 
-       // System.out.println("Tworze ania3");
-       // System.out.println(context.getApplicationContext().getPackageResourcePath());
+        // System.out.println("Tworze ania3");
+        // System.out.println(context.getApplicationContext().getPackageResourcePath());
         if (sInstance == null) {
 
 
@@ -47,6 +51,7 @@ public class SqlliteManager extends SQLiteOpenHelper {
         db = getWritableDatabase();
     }
 
+    @Override
     public void onCreate(SQLiteDatabase db)
     {
 
@@ -60,7 +65,8 @@ public class SqlliteManager extends SQLiteOpenHelper {
         db.execSQL("create table levels_photos(" + "id integer primary key autoincrement,"  + "levelid integer references levels(id)," + "photoid integer references photos(id));" + "");
         db.execSQL("create table levels_emotions(" + "id integer primary key autoincrement," + "levelid integer references levels(id),"  + "emotionid integer references emotions(id));" + "");
         //ania dodaje probujac zmienic jezyk:
-   //   db.execSQL("create table language(" + "id integer primary key autoincrement," +  "language text);" + "");
+        // 1) ZlecenieIT - a
+        db.execSQL("create table language(" + "id integer primary key autoincrement," +  "language text not null unique," + "selected integer default 0);" + "");
 
 
         addEmotion("happy");
@@ -70,6 +76,31 @@ public class SqlliteManager extends SQLiteOpenHelper {
         addEmotion("surprised");
         addEmotion("bored");
 
+        // 1) ZlecenieIT - b
+        addLang(1, "pl", 1);
+        addLang(2, "en", 0);
+
+        // 3) ZlecenieIT - a
+        Level level  = new Level();
+        level.setPhotosOrVideosList(new ArrayList<Integer>());
+        level.setName("Default level");
+        level.setLevelActive(true);
+        level.setTimeLimit(60);
+        level.setCorrectness(2);
+        level.setSublevels(2);
+        level.setPvPerLevel(2);
+        level.setEmotions(new ArrayList<Integer>(){
+            {
+                add(1); add(2);
+            }
+        });
+        level.setPhotosOrVideosList(new ArrayList<Integer>(){
+            {
+                add(7); add(8); add(9); add(10);
+            }
+        });
+
+        addLevel(level);
     }
 
     public void onOpen(SQLiteDatabase db){
@@ -78,9 +109,20 @@ public class SqlliteManager extends SQLiteOpenHelper {
 
     }
 
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
-
+        Log.d(TAG, "Database updating...");
+        Log.d(TAG, "Database drop table...");
+        db.execSQL("DROP TABLE IF EXISTS photos");
+        db.execSQL("DROP TABLE IF EXISTS emotions");
+        db.execSQL("DROP TABLE IF EXISTS levels");
+        db.execSQL("DROP TABLE IF EXISTS levels_photos");
+        db.execSQL("DROP TABLE IF EXISTS levels_emotions");
+        db.execSQL("DROP TABLE IF EXISTS language");
+        Log.d(TAG, "All data is lost.");
+        Log.d(TAG, "Database create table...");
+        onCreate(db);
     }
 
     public void addEmotion(String emotion)
@@ -111,7 +153,7 @@ public class SqlliteManager extends SQLiteOpenHelper {
         values.put("correctness", level.getCorrectness());
         values.put("sublevels", level.getSublevels());
         //ania
-    //   values.put("language",level.getLanguage());
+        //   values.put("language",level.getLanguage());
 
 
         if(level.getId() != 0) {
@@ -159,6 +201,15 @@ public class SqlliteManager extends SQLiteOpenHelper {
         }
 
 
+    }
+
+    // 1) ZlecenieIT - c
+    public void addLang(int id, String lang, Integer selected){
+        ContentValues values = new ContentValues();
+        values.put("id", id);
+        values.put("language", lang);
+        values.put("selected", selected);
+        db.insertOrThrow("language", null, values);
     }
 
     public void delete(String tableName, String columnName, String value)
@@ -264,5 +315,28 @@ public class SqlliteManager extends SQLiteOpenHelper {
                 return cursor.getString(2);
         }
         return "Fail";
+    }
+
+    // 1) ZlecenieIT - d
+    public String getCurrentLang(){
+        String[] columns = {"id", "language", "selected"};
+        String where = "selected == 1";
+        Cursor cursor = db.query("language", columns, where, null, null, null, null, null);
+        String result = null;
+        if(cursor != null && cursor.moveToFirst()) {
+            result = cursor.getString(1);
+        }
+        return result;
+    }
+
+    // 1) ZlecenieIT - e
+    public void updateCurrentLang(String lang){
+        ContentValues values = new ContentValues();
+        values.put("selected", 1);
+        String whereTrue = "language=?";
+        db.update("language", values, whereTrue, new String[] {lang});
+        values.put("selected", 0);
+        String whereFalse = "language!=?";
+        db.update("language", values, whereFalse, new String[] {lang});
     }
 }

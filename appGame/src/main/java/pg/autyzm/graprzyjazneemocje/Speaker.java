@@ -9,9 +9,9 @@ import java.util.Locale;
  * Created by Paulina on 2015-03-08.
  */
 public class Speaker {
+    private static Speaker instance;
     private final TextToSpeech textToSpeech;
     private final Context currentContext;
-    private static Speaker instance;
 
     public Speaker(Context context) {
         this.currentContext = context;
@@ -31,8 +31,8 @@ public class Speaker {
         return instance;
     }
 
-    public void close(){
-        if(textToSpeech != null) {
+    public void close() {
+        if (textToSpeech != null) {
 
             textToSpeech.stop();
             textToSpeech.shutdown();
@@ -41,7 +41,7 @@ public class Speaker {
         }
     }
 
-    public void speak(CharSequence text){
+    public void speak(CharSequence text) {
         textToSpeech.speak(text.toString(), TextToSpeech.QUEUE_FLUSH, null);//TODO: change to not deprecated method!!!!
     }
 }

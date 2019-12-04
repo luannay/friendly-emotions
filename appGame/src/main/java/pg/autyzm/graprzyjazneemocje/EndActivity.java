@@ -58,7 +58,7 @@ public class EndActivity extends Activity {
 
     }
 
-    private void failLevel(){
+    private void failLevel() {
         ImageView sunImage = (ImageView) findViewById(R.id.sun_image_end);
         sunImage.setVisibility(View.INVISIBLE);
 
@@ -66,10 +66,8 @@ public class EndActivity extends Activity {
         txt.setText(getResources().getString(R.string.failed_level));
     }
 
-    public void repeatLevel(View view){
-
+    public void repeatLevel(View view) {
         finish();
-
     }
 
 }

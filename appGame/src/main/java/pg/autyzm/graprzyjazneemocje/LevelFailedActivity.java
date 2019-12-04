@@ -1,7 +1,7 @@
 package pg.autyzm.graprzyjazneemocje;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.View;
 
 public class LevelFailedActivity extends Activity {
@@ -13,13 +13,7 @@ public class LevelFailedActivity extends Activity {
     }
 
 
-    public void repeatLevel(View view){
-
+    public void repeatLevel(View view) {
         finish();
-
     }
-
-
-
-
 }

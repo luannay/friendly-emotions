@@ -13,19 +13,16 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
+
 
 import pg.autyzm.przyjazneemocje.lib.SqlliteManager;
 
@@ -33,22 +30,24 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 import static pg.autyzm.przyjazneemocje.lib.SqlliteManager.getInstance;
 
 public class MainActivity extends AppCompatActivity {
+
+    public SqlliteManager sqlm;
     protected Locale myLocale;
-    String currentLanguage = "pl", currentLang;
+    String currentLanguage = null;
     ImageView countryEn;
     ImageView countryPl;
-    public SqlliteManager sqlm;
     ArrayList<String> list;
     ArrayList<Boolean> active_list;
-
 
     @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setTitle(R.string.app_name);
         sqlm = getInstance(this);
+
+        currentLanguage = getIntent().getStringExtra(SplashActivity.CURRENT_LANG);
 
         updateLevelList();
         //generate list
@@ -64,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
             Field[] drawables = pg.autyzm.przyjazneemocje.R.drawable.class.getFields();
             for (Field f : drawables) {
                 try {
-                    if (IfConstainsEmotionName(f.getName()))
-                    {
+                    if (IfConstainsEmotionName(f.getName())) {
                         String emotName = f.getName();
                         int resID = getResources().getIdentifier(emotName, "drawable", getPackageName());
 
@@ -79,14 +77,13 @@ public class MainActivity extends AppCompatActivity {
                         outStream.flush();
                         outStream.close();
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-
         }
 
-        if(new File(root + "/Emotions").list() != null) {
+        if (new File(root + "/Emotions").list() != null) {
 
             for (String emotName : new File(root + "/Emotions").list()) {
 
@@ -110,22 +107,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        countryPl = (ImageView) findViewById(R.id.imageView);
+        countryPl = findViewById(R.id.imageView);
         countryPl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setLocale("pl");
             }
         });
-        countryEn = (ImageView) findViewById(R.id.imageView2);
+        countryEn = findViewById(R.id.imageView2);
         countryEn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setLocale("en");
             }
         });
-        currentLanguage = getIntent().getStringExtra(currentLang);
-
         //spinner = (Spinner) findViewById(R.id.spinner3);
 /*
         List<String> lista = new ArrayList<String>();
@@ -133,9 +128,6 @@ public class MainActivity extends AppCompatActivity {
         lista.add("Wybierz język:");
         lista.add("English");
         lista.add("Polski");
-
-
-
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lista);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -156,11 +148,9 @@ public class MainActivity extends AppCompatActivity {
                     case 2:
                         setLocale("pl");
                         break;
-
                 }
     }
     */
-
         //  @Override
         // public void onNothingSelected(AdapterView<?> adapterView) {
         // }
@@ -175,8 +165,9 @@ public class MainActivity extends AppCompatActivity {
             Configuration conf = res.getConfiguration();
             conf.locale = myLocale;
             res.updateConfiguration(conf, dm);
+            sqlm.updateCurrentLang(localeName);
             Intent refresh = new Intent(this, MainActivity.class);
-            refresh.putExtra(currentLang, localeName);
+            refresh.putExtra(SplashActivity.CURRENT_LANG, localeName);
             startActivity(refresh);
         } else {
             Toast.makeText(MainActivity.this, "Language already selected!", Toast.LENGTH_SHORT).show();
@@ -192,74 +183,53 @@ public class MainActivity extends AppCompatActivity {
         System.exit(0);
     }
 
-
     // napisuje, bo chce, by po dodaniu poziomu lista poziomow w main activity automatycznie sie odswiezala - Pawel
     @Override
-    public void onResume()
-    {  // After a pause OR at startup
+    public void onResume() {  // After a pause OR at startup
         super.onResume();
         //Refresh your stuff here
-
         updateLevelList();
-
     }
 
-    public boolean IfConstainsEmotionName(String inputString)
-    {
+    public boolean IfConstainsEmotionName(String inputString) {
         Cursor cur = sqlm.giveAllEmotions();
-        while(cur.moveToNext()) {
+        while (cur.moveToNext()) {
             String emotion = cur.getString(1);
-            if(inputString.contains(emotion))
+            if (inputString.contains(emotion))
                 return true;
         }
         return false;
     }
 
-
     public void sendMessage(View view) {
         // Do something in response to button
-
         Intent intent = new Intent(this, LevelConfiguration.class);
         //EditText editText = (EditText) findViewById(R.id.edit_message);
         String message = "String";
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
-
     }
 
-    public void updateLevelList(){
-
-
+    public void updateLevelList() {
         Cursor cur = sqlm.giveAllLevels();
         list = new ArrayList<String>();
         active_list = new ArrayList<Boolean>();
 
-        while(cur.moveToNext())
-        {
-
+        while (cur.moveToNext()) {
             String name = cur.getString(cur.getColumnIndex("name"));
-
             String levelId = cur.getInt(0) + " " + name;
             //String levelId = "Level " + cur.getInt(0);
-
             int active = cur.getInt(cur.getColumnIndex("is_level_active"));
             boolean isLevelActive = (active != 0);
             active_list.add(isLevelActive);
 
-
             list.add(levelId);
-
         }
 
         //instantiate custom adapter
         CustomList adapter = new CustomList(list, active_list, this);
-
         //handle listview and assign adapter
-        ListView lView = (ListView) findViewById(R.id.list);
+        ListView lView = findViewById(R.id.list);
         lView.setAdapter(adapter);
-
-
-
-
     }
 }

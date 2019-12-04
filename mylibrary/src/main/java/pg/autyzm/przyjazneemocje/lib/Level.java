@@ -19,7 +19,7 @@ public class Level {
     private boolean isLevelActive;
     private int sublevels;
     private int correctness;
-   private String language;
+    private String language;
     //private String language;
 
     private String name;
@@ -31,7 +31,6 @@ public class Level {
 
 
     public Level(Cursor cur, Cursor cur2, Cursor cur3){
-
         setPhotosOrVideosList(new ArrayList<Integer>());
         setEmotions(new ArrayList<Integer>());
 
@@ -50,40 +49,29 @@ public class Level {
             setName(cur.getString(cur.getColumnIndex("name")));
 
             //ania probuje
-  //       setLanguage(cur.getString(cur.getColumnIndex("language")));
+            //       setLanguage(cur.getString(cur.getColumnIndex("language")));
         }
 
         if(cur2 != null){
-
             while(cur2.moveToNext()){
                 getPhotosOrVideosList().add(cur2.getInt(cur2.getColumnIndex("photoid")));
-
             }
         }
 
         if(cur3 != null){
-
-
             while(cur3.moveToNext()){
-
                 getEmotions().add(cur3.getInt(cur3.getColumnIndex("emotionid")));
-
             }
         }
-
     }
 
-
     public Level(){
-
         setPhotosOrVideosList(new ArrayList<Integer>());
         setEmotions(new ArrayList<Integer>());
 
         setLevelActive(true);
         setId(0);
-
     }
-
 
     public int getId() {
         return id;
@@ -154,8 +142,8 @@ public class Level {
     }
 
     //ania probuje:
-  // public String getLanguage() {return language;}
-  // public void setLanguage (String language) {this.language = language;}
+    // public String getLanguage() {return language;}
+    // public void setLanguage (String language) {this.language = language;}
 
     public void setPhotosOrVideosList(List<Integer> photosOrVideosList) {
         this.photosOrVideosList = photosOrVideosList;

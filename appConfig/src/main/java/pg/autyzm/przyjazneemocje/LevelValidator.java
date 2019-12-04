@@ -10,38 +10,30 @@ public class LevelValidator {
 
     Level validatedLevel;
 
-    public LevelValidator(Level l){
+    public LevelValidator(Level l) {
         validatedLevel = l;
     }
 
-
-
-
-    boolean validateLevel(){
-
+    boolean validateLevel() {
         // sprawdzenie dlugosci nazwy poziomu
-        if(validatedLevel.getName().length() == 0 || validatedLevel.getName().length() > 50) {
+        if (validatedLevel.getName().length() == 0 || validatedLevel.getName().length() > 50) {
             return false;
         }
         // prosta walidacja, czy w ogle zaznaczono jakies emocje (minimum dwa)/zdjecia
-        if(validatedLevel.getEmotions().size() < 2 || validatedLevel.getPhotosOrVideosList().size() == 0){
+        if (validatedLevel.getEmotions().size() < 2 || validatedLevel.getPhotosOrVideosList().size() == 0) {
             return false;
         }
-        if(everyEmotionHasAtLestOnePhoto()){
+        if (everyEmotionHasAtLestOnePhoto()) {
             return true;
-        }
-        else {
+        } else {
             return true;
         }
     }
 
-    public boolean everyEmotionHasAtLestOnePhoto(){
-
-        for(int emotion : validatedLevel.getEmotions()){
+    public boolean everyEmotionHasAtLestOnePhoto() {
+        for (int emotion : validatedLevel.getEmotions()) {
 
         }
-
         return true;
-
     }
 }

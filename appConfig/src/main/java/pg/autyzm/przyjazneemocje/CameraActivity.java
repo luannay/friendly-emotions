@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.ArrayMap;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Map;
@@ -23,6 +24,9 @@ import static pg.autyzm.przyjazneemocje.lib.SqlliteManager.getInstance;
  */
 public class CameraActivity extends Activity {
 
+    private static final int TAKE_PHOTO_CODE = 1;
+    private String fileName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +34,7 @@ public class CameraActivity extends Activity {
         String emotion = extras.getString("SpinnerValue");
         fileName = getFileName(emotion);
         takePhoto();
-
     }
-
-    private String fileName;
-    private static final int TAKE_PHOTO_CODE = 1;
 
     public void takePhoto() {
         final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -52,8 +52,7 @@ public class CameraActivity extends Activity {
         return new File(path, fileName + "tmp.jpg");
     }
 
-    private String getFileName(String emotionLang)
-    {
+    private String getFileName(String emotionLang) {
         SqlliteManager sqlm = getInstance(this);
         Map<String, String> mapEmo = new ArrayMap<>();
         mapEmo.put(getResources().getString(R.string.emotion_happy), "happy");
@@ -67,11 +66,10 @@ public class CameraActivity extends Activity {
         Cursor cur = sqlm.givePhotosWithEmotion(emotion);
 
         int maxNumber = 1;
-        while(cur.moveToNext())
-        {
+        while (cur.moveToNext()) {
             String name = cur.getString(3);
-            name = name.replace(".jpg","").replaceAll("[^0-9]","");
-            if(maxNumber < Integer.parseInt(name))
+            name = name.replace(".jpg", "").replaceAll("[^0-9]", "");
+            if (maxNumber < Integer.parseInt(name))
                 maxNumber = Integer.parseInt(name);
 
         }
@@ -101,7 +99,7 @@ public class CameraActivity extends Activity {
                         outWidth = (inWidth * maxSize) / inHeight;
                     }*/
 
-                    Bitmap smallBitmap = Bitmap.createScaledBitmap(largeBitmap,largeBitmap.getWidth() * 1/4,largeBitmap.getHeight()*1/4,false);
+                    Bitmap smallBitmap = Bitmap.createScaledBitmap(largeBitmap, largeBitmap.getWidth() * 1 / 4, largeBitmap.getHeight() * 1 / 4, false);
 
                     File smallFile = new File(path, fileName + ".jpg");
                     FileOutputStream fOut;
@@ -113,7 +111,8 @@ public class CameraActivity extends Activity {
                         largeBitmap.recycle();
                         smallBitmap.recycle();
                         largeFile.delete();
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                    }
 
                     finish();
                     break;

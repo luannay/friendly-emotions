@@ -15,7 +15,5 @@
     <string name="failed_level">Nie udało Ci się rozpoznać wszystkich emocji. Spróbuj ponownie</string>
 
 
-    <string name="title_activity_level_failed">LevelFailedActivity</string> ////?
-
-
+    <string name="title_activity_level_failed">LevelFailedActivity</string>
 </resources>
