@@ -1,24 +1,30 @@
-package pg.autyzm.przyjazneemocje.lib.entities;
+package pg.autyzm.przyjazneemocje;
+
+import pg.autyzm.przyjazneemocje.lib.entities.Level1;
 
 /**
  * Created by user on 26.08.2017.
  */
 
-    public class LevelValidator {
-    Level validatedLevel;
+public class LevelValidator {
 
-    public LevelValidator(Level l){
+    Level1 validatedLevel;
+
+    public LevelValidator(Level1 l){
         validatedLevel = l;
     }
 
-    public boolean validateLevel(){
+
+
+
+    boolean validateLevel(){
 
         // sprawdzenie dlugosci nazwy poziomu
         if(validatedLevel.getName().length() == 0 || validatedLevel.getName().length() > 50) {
             return false;
         }
         // prosta walidacja, czy w ogle zaznaczono jakies emocje (minimum dwa)/zdjecia
-        if(validatedLevel.getEmotions().size() < 2 || validatedLevel.getPhotosOrVideosIdList().size() == 0){
+        if(validatedLevel.getEmotions().size() < 2 || validatedLevel.getPhotosOrVideosList().size() == 0){
             return false;
         }
         if(everyEmotionHasAtLestOnePhoto()){

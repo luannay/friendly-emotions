@@ -15,4 +15,5 @@
     <string name="emotion_bored">bored</string>
 
     <string name="failed_level">Unfortunately, you need a better score to pass this level.</string>
+    <string name="title_activity_level_failed">LevelFailedActivity</string>
 </resources>
