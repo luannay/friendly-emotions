@@ -22,7 +22,7 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        //setContentView(R.layout.activity_splash);
         sqlm = SqliteManager.getInstance(this);
         setLocale(sqlm.getCurrentLang());
     }

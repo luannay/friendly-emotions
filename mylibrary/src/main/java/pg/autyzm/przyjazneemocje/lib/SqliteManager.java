@@ -10,9 +10,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 import pg.autyzm.przyjazneemocje.lib.entities.Level;
 
 public class SqliteManager extends SQLiteOpenHelper {
+
 
     private static SqliteManager sInstance;
 
@@ -48,9 +51,40 @@ public class SqliteManager extends SQLiteOpenHelper {
 
         createTablesInDatabase();
         addEmotionsToDatabase();
+
         addLang(1, "pl", 1);
         addLang(2, "en", 0);
 
+        Level level = new Level();
+        level.setPhotosOrVideosIdList(new ArrayList<Integer>());
+        level.setName("Default level");
+        level.setLevelActive(true);
+        level.setTimeLimit(10);
+        level.setPraises("dobrze");
+        level.setAmountOfAllowedTriesForEachEmotion(3);
+        level.setSublevelsPerEachEmotion(2);
+        level.setPhotosOrVideosShowedForOneQuestion(3);
+        level.setForTests(true);
+        level.setShouldQuestionBeReadAloud(true);
+        level.setQuestionType(Level.Question.EMOTION_NAME);
+
+        level.setEmotions(new ArrayList<Integer>() {
+            {
+                add(0);
+                add(1);
+            }
+        });
+        level.setPhotosOrVideosIdList(new ArrayList<Integer>() {
+            {
+                add(7);
+                add(6);
+                add(8);
+                add(9);
+                add(10);
+            }
+        });
+
+        saveLevelToDatabase(level);
 
     }
 
@@ -92,6 +126,14 @@ public class SqliteManager extends SQLiteOpenHelper {
         values.put("emotion",emotion);
         values.put("name",fileName);
         db.insertOrThrow("videos", null, values);
+    }
+
+    public void addLang(int id, String lang, Integer selected) {
+        ContentValues values = new ContentValues();
+        values.put("id", id);
+        values.put("language", lang);
+        values.put("selected", selected);
+        db.insertOrThrow("language", null, values);
     }
 
 
@@ -148,16 +190,6 @@ public class SqliteManager extends SQLiteOpenHelper {
 
 
     }
-
-    public void addLang(int id, String lang, Integer selected) {
-        ContentValues values = new ContentValues();
-        values.put("id", id);
-        values.put("language", lang);
-        values.put("selected", selected);
-        db.insertOrThrow("language", null, values);
-    }
-
-
 
 
     public void delete(String tableName, String columnName, String value)
