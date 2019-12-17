@@ -3,6 +3,7 @@ package pg.autyzm.przyjazneemocje.lib;
 /**
  * Created by Ann on 26.09.2016.
  */
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -49,6 +50,7 @@ public class SqliteManager extends SQLiteOpenHelper {
         addEmotionsToDatabase();
         addLang(1, "pl", 1);
         addLang(2, "en", 0);
+
 
     }
 

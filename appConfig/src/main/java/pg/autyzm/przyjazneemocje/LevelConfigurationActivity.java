@@ -17,7 +17,6 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -29,8 +28,8 @@ import pg.autyzm.przyjazneemocje.View.CheckboxGridAdapter;
 import pg.autyzm.przyjazneemocje.View.CheckboxGridBean;
 import pg.autyzm.przyjazneemocje.View.CheckboxImageAdapter;
 import pg.autyzm.przyjazneemocje.View.GridCheckboxImageBean;
-import pg.autyzm.przyjazneemocje.lib.entities.Level;
 import pg.autyzm.przyjazneemocje.lib.SqliteManager;
+import pg.autyzm.przyjazneemocje.lib.entities.Level;
 
 import static pg.autyzm.przyjazneemocje.lib.SqliteManager.getInstance;
 
@@ -49,7 +48,7 @@ public class LevelConfigurationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab_view);
-
+        setTitle(R.string.app_name);
         createTabMaterial();
         createTabLearningWays();
         createTabConsolidation();
