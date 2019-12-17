@@ -47,6 +47,8 @@ public class SqliteManager extends SQLiteOpenHelper {
 
         createTablesInDatabase();
         addEmotionsToDatabase();
+        addLang(1, "pl", 1);
+        addLang(2, "en", 0);
 
     }
 
@@ -89,6 +91,7 @@ public class SqliteManager extends SQLiteOpenHelper {
         values.put("name",fileName);
         db.insertOrThrow("videos", null, values);
     }
+
 
     public void saveLevelToDatabase(Level level)
     {
@@ -143,6 +146,17 @@ public class SqliteManager extends SQLiteOpenHelper {
 
 
     }
+
+    public void addLang(int id, String lang, Integer selected) {
+        ContentValues values = new ContentValues();
+        values.put("id", id);
+        values.put("language", lang);
+        values.put("selected", selected);
+        db.insertOrThrow("language", null, values);
+    }
+
+
+
 
     public void delete(String tableName, String columnName, String value)
     {
@@ -265,7 +279,7 @@ public class SqliteManager extends SQLiteOpenHelper {
         db.execSQL("create table levels_photos(" + "id integer primary key autoincrement,"  + "levelid integer references levels(id)," + "photoid integer references photos(id));" + "");
         db.execSQL("create table levels_emotions(" + "id integer primary key autoincrement," + "levelid integer references levels(id),"  + "emotionid integer references emotions(id));" + "");
         db.execSQL("create table videos(" + "id integer primary key autoincrement," + "path int," + "emotion text," + "name text);" + "");
-
+        db.execSQL("create table language(" + "id integer primary key autoincrement," + "language text not null unique," + "selected integer default 0);" + "");
     }
 
     private void deleteTablesFromDatabase(){
@@ -276,6 +290,7 @@ public class SqliteManager extends SQLiteOpenHelper {
         db.execSQL("drop table emotions");
         db.execSQL("drop table photos");
         db.execSQL("drop table videos");
+        db.execSQL("drop table language");
     }
 
     private void addEmotionsToDatabase(){
@@ -296,6 +311,28 @@ public class SqliteManager extends SQLiteOpenHelper {
 
 
         return cursor.getInt(0);
+    }
+
+    public String getCurrentLang() {
+        String[] columns = {"id", "language", "selected"};
+        String where = "selected == 1";
+        Cursor cursor = db.query("language", columns, where, null, null, null, null, null);
+        String result = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            result = cursor.getString(1);
+        }
+        return result;
+    }
+
+
+    public void updateCurrentLang(String lang) {
+        ContentValues values = new ContentValues();
+        values.put("selected", 1);
+        String whereTrue = "language=?";
+        db.update("language", values, whereTrue, new String[]{lang});
+        values.put("selected", 0);
+        String whereFalse = "language!=?";
+        db.update("language", values, whereFalse, new String[]{lang});
     }
 
 }

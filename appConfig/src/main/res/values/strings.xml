@@ -15,6 +15,7 @@
     <string name="active">aktywny </string>
     <string name="amountOfAllowedTriesForEachEmotion">Poprawność</string>
     <string name="sublevelsPerEachEmotion">Podpoziomy</string>
+    <string name="language_choice">Wybierz język:</string>
 
 
     <array name="spinner">

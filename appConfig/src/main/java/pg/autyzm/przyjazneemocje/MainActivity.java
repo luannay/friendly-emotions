@@ -1,14 +1,19 @@
 package pg.autyzm.przyjazneemocje;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import pg.autyzm.przyjazneemocje.lib.SqliteManager;
 
@@ -25,6 +31,10 @@ import static pg.autyzm.przyjazneemocje.lib.SqliteManager.getInstance;
 public class MainActivity extends AppCompatActivity {
 
     public SqliteManager sqlm;
+    protected Locale myLocale;
+    String currentLanguage = null;
+    ImageView countryEn;
+    ImageView countryPl;
     ArrayList<String> list;
     ArrayList<Boolean> active_list;
     String root = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
@@ -33,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.app_name);
         setContentView(R.layout.activity_main);
 
         File createMainDir = new File(root + "FriendlyEmotions" + File.separator);
@@ -42,11 +53,16 @@ public class MainActivity extends AppCompatActivity {
 
         sqlm = getInstance(this);
 
+        currentLanguage = getIntent().getStringExtra(SplashActivity.CURRENT_LANG);
+
         updateLevelList();
         //generate list
 
         sqlm.cleanTable("photos"); //TODO not clean and add, but only update
         sqlm.cleanTable("videos");
+
+        //nie wiem czy to potrzebne
+        String root = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
 
         File createDir = new File(root + "FriendlyEmotions/Photos" + File.separator);
         if (!createDir.exists()) {
@@ -126,8 +142,50 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+        countryPl = findViewById(R.id.imageView);
+        countryPl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocale("pl");
+            }
+        });
+        countryEn = findViewById(R.id.imageView2);
+        countryEn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocale("en");
+            }
+        });
     }
 
+    public void setLocale(String localeName) {
+        if (!localeName.equals(currentLanguage)) {
+            myLocale = new Locale(localeName);
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+            sqlm.updateCurrentLang(localeName);
+            Intent refresh = new Intent(this, MainActivity.class);
+            refresh.putExtra(SplashActivity.CURRENT_LANG, localeName);
+            startActivity(refresh);
+        } else {
+            Toast.makeText(MainActivity.this, "Language already selected!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+        System.exit(0);
+    }
+
+//onBackPressed usunelam
 
     // napisuje, bo chce, by po dodaniu poziomu lista poziomow w main activity automatycznie sie odswiezala - Pawel
     @Override

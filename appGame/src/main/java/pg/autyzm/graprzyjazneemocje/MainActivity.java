@@ -353,7 +353,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 image.setLayoutParams(lp);
 
                 if (photoName.contains(rightEmotion)) {
-                    image.setId(1);
+                    image.setId(1); ///eee zmienilam 1 na 0
                 } else {
                     image.setId(0);
                 }
@@ -373,7 +373,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     public void onClick(View v) {
         if (v.getId() == 1) {
-            animationEnds = false;
             sublevelsLeft--;
             rightAnswers++;
             rightAnswersSublevel++;
@@ -519,7 +518,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     final int childcount = imagesLinear.getChildCount();
                     for (int i = 0; i < childcount; i++) {
                         ImageView image = (ImageView) imagesLinear.getChildAt(i);
-                        if (image.getId() != 1) {
+                        if (image.getId() != 1) { //eeee zmienilam 1 na i
                             if(hintTypes == 8 || hintTypes == 9 || hintTypes == 10 || hintTypes == 11 || hintTypes == 12 || hintTypes == 13 || hintTypes == 15) {
                                 image.setColorFilter(filter);
                             }
