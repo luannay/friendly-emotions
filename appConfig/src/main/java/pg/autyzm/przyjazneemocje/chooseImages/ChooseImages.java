@@ -95,7 +95,7 @@ public class ChooseImages extends Activity implements android.widget.CompoundBut
                     while(cursor.moveToNext())
                     {
                         finded = false;
-                        if(cursor.getString(3).equals(fileName))
+                        if (cursor.getString(6).equals(fileName))//bylo 3
                         {
                             finded = true;
                             break;
@@ -116,7 +116,7 @@ public class ChooseImages extends Activity implements android.widget.CompoundBut
         tabPhotos = new RowBean[n];
         while (cursor.moveToNext()) {
 
-            tabPhotos[--n] = (new RowBean(cursor.getString(3),cursor.getInt(1), false, getContentResolver(), cursor.getInt(0)));
+            tabPhotos[--n] = (new RowBean(cursor.getString(6), cursor.getInt(1), false, getContentResolver(), cursor.getInt(0)));//bylo 3
         }
 
         //wybrane wczesniej

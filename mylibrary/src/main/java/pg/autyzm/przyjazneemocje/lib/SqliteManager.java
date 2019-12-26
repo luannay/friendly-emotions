@@ -82,18 +82,11 @@ public class SqliteManager extends SQLiteOpenHelper {
 
                 add(9);
                 add(10);
-                add(13);
-                add(14);
+                add(11);
                 add(16);
-                add(17);
-                add(18);
-                add(19);
-                add(20);
-                add(21);
-                add(22);
-                add(23);
-                add(24);
-                add(25);
+                add(14);
+                add(15);
+
 
 
             }
@@ -126,8 +119,8 @@ public class SqliteManager extends SQLiteOpenHelper {
                 add(7);
                 add(6);
                 add(8);
-                add(9);
-                add(10);
+                add(12);
+                add(13);
             }
         });
 
@@ -153,7 +146,7 @@ public class SqliteManager extends SQLiteOpenHelper {
             {
                 add(0);
                 add(1);
-                add(2);
+                add(4);
                 add(3);
             }
         });
@@ -162,12 +155,13 @@ public class SqliteManager extends SQLiteOpenHelper {
                 add(7);
                 add(6);
                 add(8);
-                add(9);
-                add(10);
+                add(12);
+                add(13);
                 add(1);
                 add(2);
                 add(3);
-                add(13);
+                add(17);
+                add(18);
             }
         });
 
@@ -202,16 +196,16 @@ public class SqliteManager extends SQLiteOpenHelper {
                 add(7);
                 add(6);
                 add(8);
-                add(9);
-                add(10);
+                add(12);
+                add(13);
                 add(1);
                 add(2);
                 add(3);
-                add(13);
-                add(11);
-                add(12);
+                add(17);
+                add(18);
                 add(4);
                 add(5);
+                add(19);
             }
         });
 

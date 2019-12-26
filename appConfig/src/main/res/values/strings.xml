@@ -21,6 +21,8 @@
     <string name="level_medium">Wesoły/smutny/przestraszony/zły</string>
     <string name="level_hard">Wesoły/smutny/przestraszony/zły/znudzony/zdziwiony</string>
     <string name="selected_language">Język już wybrany!</string>
+    <string name="app"> APLIKACJA  SMILE
+          </string>
 
 
     <array name="spinner">
