@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
@@ -179,15 +180,17 @@ public class LevelConfigurationActivity extends AppCompatActivity {
         }
 
         // find and add custom praises saved in level
-
+/*
         for(int i = 0; i < praisesArray.length; i++) {
 
             if(! praisesArray[i].equals("default_praise")){
                 praiseList.add(new CheckboxGridBean(praisesArray[i], true));
             }
         }
+        */
 
-        updateGridPraise();
+//ania 26.12
+        // updateGridPraise();
 
         // 4 panel
 
@@ -216,7 +219,7 @@ public class LevelConfigurationActivity extends AppCompatActivity {
 
     private void createTabConsolidation() {
         createGridPraise();
-        activateAddPraiseButton();
+        //activateAddPraiseButton();
     }
 
     private void createTabLearningWays() {
@@ -264,6 +267,7 @@ public class LevelConfigurationActivity extends AppCompatActivity {
         gridView.setAdapter(adapter);
     }
 
+    /**
     private void activateAddPraiseButton() {
 
         Button button = (Button) findViewById(R.id.buttonAddPraise);
@@ -277,8 +281,11 @@ public class LevelConfigurationActivity extends AppCompatActivity {
         });
     }
 
+     */
+
     private void createGridPraise() {
         String[] praises = getResources().getStringArray(R.array.praise_array);
+        //ania 26.12
         for (String praise : praises) {
             praiseList.add(new CheckboxGridBean(praise, true));
         }
@@ -423,15 +430,28 @@ public class LevelConfigurationActivity extends AppCompatActivity {
                     findViewById(R.id.button_prev).setVisibility(View.VISIBLE);
                 }
                 ImageButton button = (ImageButton) findViewById(R.id.button_next);
+                ImageView savingButton = (ImageView) findViewById(R.id.button_save);
                 if ("tab5_save".equals(tab)) {
                     updateInfo();
                     button.setImageResource(R.drawable.icon_save);
+                    savingButton.setVisibility(View.INVISIBLE);
                 } else {
                     button.setImageResource(R.drawable.icon_next);
+                    savingButton.setVisibility(View.VISIBLE);
                 }
             }
         });
         tab.setup();
+        ///anka
+        ImageView savingButton = (ImageView) findViewById(R.id.button_save);
+        savingButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                save();
+            }
+        });
+
+
+
 
         String[] tabsFiles = {"tab1_material", "tab2_learning_ways", "tab3_consolidation", "tab4_test", "tab5_save"};
         TabHost.TabSpec spec;
@@ -560,7 +580,7 @@ public class LevelConfigurationActivity extends AppCompatActivity {
 
         for(Object objectItem : praiseList){
             CheckboxGridBean checkboxGridBean = (CheckboxGridBean) objectItem;
-
+//ania 26.12
             if(checkboxGridBean.isChecked()){
                 level.addPraise(checkboxGridBean.getName());
             }

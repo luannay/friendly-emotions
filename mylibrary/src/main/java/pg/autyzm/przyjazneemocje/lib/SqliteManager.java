@@ -16,7 +16,7 @@ import pg.autyzm.przyjazneemocje.lib.entities.Level;
 
 public class SqliteManager extends SQLiteOpenHelper {
 
-
+    private static SqliteManager appContext;
     private static SqliteManager sInstance;
 
     private static final String DATABASE_NAME = "przyjazneemocje";
@@ -24,7 +24,14 @@ public class SqliteManager extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
 
+    private SqliteManager(final Context context) {
+        super(new DatabaseContext(context), DATABASE_NAME, null, 18);
+        db = getWritableDatabase();
+    }
 
+    public static SqliteManager getAppContext() {
+        return appContext;
+    }
 
     public static synchronized SqliteManager getInstance(Context context) {
 
@@ -35,19 +42,13 @@ public class SqliteManager extends SQLiteOpenHelper {
             sInstance = new SqliteManager(context.getApplicationContext());
         }
         return sInstance;
+
     }
 
-
-    private SqliteManager(final Context context)
-    {
-        super(new DatabaseContext(context), DATABASE_NAME, null, 18);
-        db = getWritableDatabase();
-    }
-
-    public void onCreate(SQLiteDatabase db)
-    {
+    public void onCreate(SQLiteDatabase db) {
 
         this.db = db;
+
 
         createTablesInDatabase();
         addEmotionsToDatabase();
@@ -55,26 +56,72 @@ public class SqliteManager extends SQLiteOpenHelper {
         addLang(1, "pl", 1);
         addLang(2, "en", 0);
 
-        Level level = new Level();
-        level.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level.setName("Default level");
-        level.setLevelActive(true);
-        level.setTimeLimit(10);
-        level.setPraises("dobrze");
-        level.setAmountOfAllowedTriesForEachEmotion(3);
-        level.setSublevelsPerEachEmotion(2);
-        level.setPhotosOrVideosShowedForOneQuestion(3);
-        level.setForTests(true);
-        level.setShouldQuestionBeReadAloud(true);
-        level.setQuestionType(Level.Question.EMOTION_NAME);
+        Level level_easy_icons = new Level();
+        level_easy_icons.setPhotosOrVideosIdList(new ArrayList<Integer>());
+        level_easy_icons.setName("Wesoły/smutny IKONY");
+        level_easy_icons.setLevelActive(true);
+        level_easy_icons.setTimeLimit(10);
+        level_easy_icons.setPraises("dobrze");
+        level_easy_icons.setAmountOfAllowedTriesForEachEmotion(3);
+        level_easy_icons.setSublevelsPerEachEmotion(2);
+        level_easy_icons.setPhotosOrVideosShowedForOneQuestion(3);
+        level_easy_icons.setForTests(true);
+        level_easy_icons.setShouldQuestionBeReadAloud(false);
+        level_easy_icons.setQuestionType(Level.Question.EMOTION_NAME);
 
-        level.setEmotions(new ArrayList<Integer>() {
+
+        level_easy_icons.setEmotions(new ArrayList<Integer>() {
             {
                 add(0);
                 add(1);
             }
         });
-        level.setPhotosOrVideosIdList(new ArrayList<Integer>() {
+        level_easy_icons.setPhotosOrVideosIdList(new ArrayList<Integer>() {
+            {
+
+
+                add(9);
+                add(10);
+                add(13);
+                add(14);
+                add(16);
+                add(17);
+                add(18);
+                add(19);
+                add(20);
+                add(21);
+                add(22);
+                add(23);
+                add(24);
+                add(25);
+
+
+            }
+        });
+
+        saveLevelToDatabase(level_easy_icons);
+
+
+        Level level_easy_photos = new Level();
+        level_easy_photos.setPhotosOrVideosIdList(new ArrayList<Integer>());
+        level_easy_photos.setName("Wesoły/smutny ZDJĘCIA");
+        level_easy_photos.setLevelActive(false);
+        level_easy_photos.setTimeLimit(10);
+        level_easy_photos.setPraises("dobrze");
+        level_easy_photos.setAmountOfAllowedTriesForEachEmotion(3);
+        level_easy_photos.setSublevelsPerEachEmotion(2);
+        level_easy_photos.setPhotosOrVideosShowedForOneQuestion(3);
+        level_easy_photos.setForTests(true);
+        level_easy_photos.setShouldQuestionBeReadAloud(true);
+        level_easy_photos.setQuestionType(Level.Question.EMOTION_NAME);
+
+        level_easy_photos.setEmotions(new ArrayList<Integer>() {
+            {
+                add(0);
+                add(1);
+            }
+        });
+        level_easy_photos.setPhotosOrVideosIdList(new ArrayList<Integer>() {
             {
                 add(7);
                 add(6);
@@ -84,9 +131,94 @@ public class SqliteManager extends SQLiteOpenHelper {
             }
         });
 
-        saveLevelToDatabase(level);
+        saveLevelToDatabase(level_easy_photos);
+
+        Level level_medium = new Level();
+        level_medium.setPhotosOrVideosIdList(new ArrayList<Integer>());
+        level_medium.setName("Wesoły/smutny/przestraszony/zły");
+        level_medium.setLevelActive(false);
+        level_medium.setTimeLimit(10);
+        level_medium.setPraises("dobrze");
+        level_medium.setPraises("wspaniale");
+        level_medium.setPraises("świetnie");
+        level_medium.setAmountOfAllowedTriesForEachEmotion(3);
+        level_medium.setPhotosOrVideosShowedForOneQuestion(3);
+        level_medium.setSublevelsPerEachEmotion(2);
+        level_medium.setForTests(true);
+        level_medium.setShouldQuestionBeReadAloud(true);
+        level_medium.setQuestionType(Level.Question.SHOW_EMOTION_NAME);
+        level_medium.setAmountOfEmotions(Integer.toString(level_medium.getEmotions().size()));
+
+        level_medium.setEmotions(new ArrayList<Integer>() {
+            {
+                add(0);
+                add(1);
+                add(2);
+                add(3);
+            }
+        });
+        level_medium.setPhotosOrVideosIdList(new ArrayList<Integer>() {
+            {
+                add(7);
+                add(6);
+                add(8);
+                add(9);
+                add(10);
+                add(1);
+                add(2);
+                add(3);
+                add(13);
+            }
+        });
+
+        saveLevelToDatabase(level_medium);
+
+
+        Level level_difficult = new Level();
+        level_difficult.setPhotosOrVideosIdList(new ArrayList<Integer>());
+        level_difficult.setName("Wesoły/smutny/przestraszony/zły/znudzony/zdziwiony");
+        level_difficult.setLevelActive(false);
+        level_difficult.setTimeLimit(10);
+        level_difficult.setPraises("dobrze");
+        level_difficult.setAmountOfAllowedTriesForEachEmotion(3);
+        level_difficult.setSublevelsPerEachEmotion(2);
+        level_difficult.setPhotosOrVideosShowedForOneQuestion(3);
+        level_difficult.setForTests(true);
+        level_difficult.setShouldQuestionBeReadAloud(true);
+        level_difficult.setQuestionType(Level.Question.SHOW_WHERE_IS_EMOTION_NAME);
+        //level_difficult.setAmountOfEmotions("6");
+        level_difficult.setEmotions(new ArrayList<Integer>() {
+            {
+                add(0);
+                add(1);
+                add(2);
+                add(3);
+                add(4);
+                add(5);
+            }
+        });
+        level_difficult.setPhotosOrVideosIdList(new ArrayList<Integer>() {
+            {
+                add(7);
+                add(6);
+                add(8);
+                add(9);
+                add(10);
+                add(1);
+                add(2);
+                add(3);
+                add(13);
+                add(11);
+                add(12);
+                add(4);
+                add(5);
+            }
+        });
+
+        saveLevelToDatabase(level_difficult);
 
     }
+
 
     public void onOpen(SQLiteDatabase db){
 
@@ -262,6 +394,7 @@ public class SqliteManager extends SQLiteOpenHelper {
         return cursor;
 
     }
+
 
     public Cursor giveEmotionName(int id){
 

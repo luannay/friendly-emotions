@@ -16,6 +16,11 @@
     <string name="amountOfAllowedTriesForEachEmotion">Correctness</string>
     <string name="sublevelsPerEachEmotion">Sublevels</string>
     <string name="language_choice">Choose language:</string>
+    <string name="level_easy_photos">Happy/sad PHOTOS</string>
+    <string name="level_easy_icons">Happy/sad ICONS</string>
+    <string name="level_medium">Happy/sad/scared/angry</string>
+    <string name="level_hard">Happy/sad/scared/angry/bored/surprised</string>
+    <string name="selected_language">Language already selected!</string>
 
 
     <string-array name="spinner">

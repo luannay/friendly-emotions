@@ -37,30 +37,6 @@
                 android:numColumns="3"
                 android:padding="5dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:paddingBottom="30dp">
-
-                <EditText
-                    android:id="@+id/newPraise"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="@string/label1.1_consolidation" />
-
-                <Button
-                    android:id="@+id/buttonAddPraise"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="+" />
-
-            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

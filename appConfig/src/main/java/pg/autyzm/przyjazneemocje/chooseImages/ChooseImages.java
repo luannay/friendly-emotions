@@ -77,6 +77,7 @@ public class ChooseImages extends Activity implements android.widget.CompoundBut
 
         //tu dodaje
         String root = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
+        System.out.println(root);
 
         String newFileName = "";
 

@@ -29,7 +29,7 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 import static pg.autyzm.przyjazneemocje.lib.SqliteManager.getInstance;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static MainActivity appContext;
     public SqliteManager sqlm;
     protected Locale myLocale;
     String currentLanguage = null;
@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Boolean> active_list;
     String root = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
 
+    public static MainActivity getAppContext() {
+        return appContext;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
             refresh.putExtra(SplashActivity.CURRENT_LANG, localeName);
             startActivity(refresh);
         } else {
-            Toast.makeText(MainActivity.this, "Language already selected!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.selected_language, Toast.LENGTH_SHORT).show();
         }
     }
 

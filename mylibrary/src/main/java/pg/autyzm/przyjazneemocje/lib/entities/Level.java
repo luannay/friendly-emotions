@@ -22,7 +22,68 @@ public class Level {
     private int sublevelsPerEachEmotion;
     private int amountOfAllowedTriesForEachEmotion;
     private boolean isForTests;
+
+    private static Level levelContext;
+    private String amountOfEmotions;
+
+    public Level(Cursor cur, Cursor cur2, Cursor cur3) {
+
+        setPhotosOrVideosIdList(new ArrayList<Integer>());
+        setEmotions(new ArrayList<Integer>());
+
+        while (cur.moveToNext()) {
+            //setAmountOfEmotions(cur.getString(cur.getColumnIndex("nr_emotions")));
+            setId(cur.getInt(cur.getColumnIndex("id")));
+
+            setPhotosOrVideosFlag(cur.getString(cur.getColumnIndex("photos_or_videos")));
+
+            setTimeLimit(cur.getInt(cur.getColumnIndex("time_limit")));
+            setPhotosOrVideosShowedForOneQuestion(cur.getInt(cur.getColumnIndex("photos_or_videos_per_level")));
+            int active = cur.getInt(cur.getColumnIndex("is_level_active"));
+            //
+            setPraises(cur.getString(cur.getColumnIndex("praises")));
+            setShouldQuestionBeReadAloud(cur.getInt(cur.getColumnIndex("shouldQuestionBeReadAloud")) != 0);
+
+            int isLevelForTests = cur.getInt(cur.getColumnIndex("is_for_tests"));
+            setForTests(isLevelForTests != 0);
+
+            setAmountOfAllowedTriesForEachEmotion(cur.getInt(cur.getColumnIndex("correctness")));
+            setSublevelsPerEachEmotion(cur.getInt(cur.getColumnIndex("sublevels_per_each_emotion")));
+
+            setLevelActive((active != 0));
+            setName(cur.getString(cur.getColumnIndex("name")));
+            setQuestionType(Question.valueOf(cur.getString(cur.getColumnIndex("question_type"))));
+            setHintTypesAsNumber(cur.getInt(cur.getColumnIndex("hint_types_as_number")));
+        }
+
+        if (cur2 != null) {
+
+            while (cur2.moveToNext()) {
+                getPhotosOrVideosIdList().add(cur2.getInt(cur2.getColumnIndex("photoid")));
+
+            }
+        }
+
+        if (cur3 != null) {
+
+
+            while (cur3.moveToNext()) {
+
+                getEmotions().add(cur3.getInt(cur3.getColumnIndex("emotionid")) - 1);
+
+            }
+        }
+
+    }
     private String name;
+
+    public static Level getLevelContext() {
+        return levelContext;
+    }
+
+    public String getAmountOfEmotions() {
+        return amountOfEmotions;
+    }
 
     private int hintTypesAsNumber = 0;
 
@@ -88,51 +149,8 @@ public class Level {
         hintTypes.add(hint);
     }
 
-    public Level(Cursor cur, Cursor cur2, Cursor cur3){
-
-        setPhotosOrVideosIdList(new ArrayList<Integer>());
-        setEmotions(new ArrayList<Integer>());
-
-        while(cur.moveToNext())
-        {
-            setId(cur.getInt(cur.getColumnIndex("id")));
-            setPhotosOrVideosFlag(cur.getString(cur.getColumnIndex("photos_or_videos")));
-            setTimeLimit(cur.getInt(cur.getColumnIndex("time_limit")));
-            setPhotosOrVideosShowedForOneQuestion(cur.getInt(cur.getColumnIndex("photos_or_videos_per_level")));
-            int active = cur.getInt(cur.getColumnIndex("is_level_active"));
-            setPraises(cur.getString(cur.getColumnIndex("praises")));
-            setShouldQuestionBeReadAloud(cur.getInt(cur.getColumnIndex("shouldQuestionBeReadAloud")) != 0);
-
-            int isLevelForTests = cur.getInt(cur.getColumnIndex("is_for_tests"));
-            setForTests(isLevelForTests != 0);
-
-            setAmountOfAllowedTriesForEachEmotion(cur.getInt(cur.getColumnIndex("correctness")));
-            setSublevelsPerEachEmotion(cur.getInt(cur.getColumnIndex("sublevels_per_each_emotion")));
-
-            setLevelActive((active != 0));
-            setName(cur.getString(cur.getColumnIndex("name")));
-            setQuestionType(Question.valueOf(cur.getString(cur.getColumnIndex("question_type"))));
-            setHintTypesAsNumber(cur.getInt(cur.getColumnIndex("hint_types_as_number")));
-        }
-
-        if(cur2 != null){
-
-            while(cur2.moveToNext()){
-                getPhotosOrVideosIdList().add(cur2.getInt(cur2.getColumnIndex("photoid")));
-
-            }
-        }
-
-        if(cur3 != null){
-
-
-            while(cur3.moveToNext()){
-
-                getEmotions().add(cur3.getInt(cur3.getColumnIndex("emotionid")) - 1);
-
-            }
-        }
-
+    public void setAmountOfEmotions(String amountOfEmotions) {
+        this.getEmotions().size();
     }
 
 
@@ -338,7 +356,6 @@ public class Level {
 
         return level;
     }
-
 
 
 }
