@@ -11,8 +11,10 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.File;
@@ -158,6 +160,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setLocale("en");
+            }
+        });
+
+        ImageButton buttonCamera = findViewById(R.id.button_take_photo);
+        buttonCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Spinner spinner2 = findViewById(R.id.spinner2);
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("SpinnerValue", spinner2.getSelectedItem().toString());
+                Intent in = new Intent(MainActivity.this, CameraActivity.class);
+                in.putExtras(bundle2);
+                startActivityForResult(in, 1);
             }
         });
     }

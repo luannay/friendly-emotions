@@ -443,14 +443,14 @@ public class LevelConfigurationActivity extends AppCompatActivity {
         });
         tab.setup();
         ///anka
+
+
         ImageView savingButton = (ImageView) findViewById(R.id.button_save);
         savingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 save();
             }
         });
-
-
 
 
         String[] tabsFiles = {"tab1_material", "tab2_learning_ways", "tab3_consolidation", "tab4_test", "tab5_save"};
