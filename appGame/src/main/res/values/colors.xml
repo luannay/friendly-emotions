@@ -3,10 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="command">#660099</color>
-    <color name="score">#CC33CC</color>
-    <color name="background_up">#1597fa</color>
+    <color name="command">#FFFFFF</color>
+    <color name="score">#FFFAFA</color>
+    <color name="background_up">#FF4081</color>
     <color name="background_down">#348700</color>
-    <color name="background_center">#feffd6</color>
+    <color name="background_center">#1597fa</color>
     <color name="background_street">#181818</color>
 </resources>

@@ -257,6 +257,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
         StartTimer(level);
+
+
            /* final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -500,7 +502,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private void StartTimer(Level l) {
         //timer! seconds * 1000
-        if (l.getTimeLimit() != 0) {
+        if (l.getTimeLimit() != 1) {
             final int hintTypes = l.getHintTypesAsNumber();
             final Context currentContext = this;
             timer = new CountDownTimer(l.getTimeLimit() * 1000, 1000) {
@@ -519,7 +521,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     final int childcount = imagesLinear.getChildCount();
                     for (int i = 0; i < childcount; i++) {
                         ImageView image = (ImageView) imagesLinear.getChildAt(i);
-                        if (image.getId() != 1) { //eeee zmienilam 1 na i
+                        if (image.getId() != 1) { //eeee zmienilam 1 na 0
                             if(hintTypes == 8 || hintTypes == 9 || hintTypes == 10 || hintTypes == 11 || hintTypes == 12 || hintTypes == 13 || hintTypes == 15) {
                                 image.setColorFilter(filter);
                             }

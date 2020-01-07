@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
     <TextView
         android:id="@+id/list_item_string"
@@ -11,6 +12,7 @@
         android:layout_alignParentLeft="true"
         android:paddingLeft="8dp"
         android:textSize="18sp"
+        android:textColor="@color/colorTextBack"
         android:textStyle="bold" />
 
     <ImageButton
@@ -45,6 +47,7 @@
         android:layout_toStartOf="@+id/edit_btn"
         android:layout_alignBottom="@+id/edit_btn"
         android:layout_toLeftOf="@+id/edit_btn"
-        android:text="@string/active" />
+        android:text="@string/active"
+        android:textColor="@color/colorTextBack" />
 
 </RelativeLayout>

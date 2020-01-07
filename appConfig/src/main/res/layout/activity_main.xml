@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorBackground"
     tools:context="pg.autyzm.przyjazneemocje.MainActivity">
 
 
@@ -51,6 +52,7 @@
         android:layout_marginLeft="49dp"
         android:layout_marginTop="10dp"
         android:text="@string/label_level_list"
+        android:textColor="@color/colorTextBack"
         android:textSize="25sp" />
 
     <TextView
@@ -64,6 +66,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="40dp"
         android:text="@string/language_choice"
+        android:textColor="@color/colorTextBack"
         tools:text="TextView" />
 
     <ImageView
