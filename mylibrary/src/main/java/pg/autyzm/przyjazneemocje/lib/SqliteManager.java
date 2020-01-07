@@ -19,6 +19,7 @@ public class SqliteManager extends SQLiteOpenHelper {
     private static SqliteManager appContext;
     private static SqliteManager sInstance;
 
+
     private static final String DATABASE_NAME = "przyjazneemocje";
 
 
@@ -45,10 +46,10 @@ public class SqliteManager extends SQLiteOpenHelper {
 
     }
 
+
     public void onCreate(SQLiteDatabase db) {
 
         this.db = db;
-
 
         createTablesInDatabase();
         addEmotionsToDatabase();
@@ -58,7 +59,7 @@ public class SqliteManager extends SQLiteOpenHelper {
 
         Level level_easy_icons = new Level();
         level_easy_icons.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level_easy_icons.setName("Wesoły/smutny IKONY");
+        level_easy_icons.setName("Happy/sad ICONS");
         level_easy_icons.setLevelActive(true);
         level_easy_icons.setTimeLimit(10);
         level_easy_icons.setPraises("dobrze");
@@ -97,7 +98,7 @@ public class SqliteManager extends SQLiteOpenHelper {
 
         Level level_easy_photos = new Level();
         level_easy_photos.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level_easy_photos.setName("Wesoły/smutny ZDJĘCIA");
+        level_easy_photos.setName("Happy/sad PHOTOS");
         level_easy_photos.setLevelActive(false);
         level_easy_photos.setTimeLimit(10);
         level_easy_photos.setPraises("dobrze");
@@ -128,7 +129,7 @@ public class SqliteManager extends SQLiteOpenHelper {
 
         Level level_medium = new Level();
         level_medium.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level_medium.setName("Wesoły/smutny/przestraszony/zły");
+        level_medium.setName("Happy/sad/angry/scared");
         level_medium.setLevelActive(false);
         level_medium.setTimeLimit(10);
         level_medium.setPraises("dobrze");
@@ -170,7 +171,7 @@ public class SqliteManager extends SQLiteOpenHelper {
 
         Level level_difficult = new Level();
         level_difficult.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level_difficult.setName("Wesoły/smutny/przestraszony/zły/znudzony/zdziwiony");
+        level_difficult.setName("Happy/sad/scared/angry/bored/surprised");
         level_difficult.setLevelActive(false);
         level_difficult.setTimeLimit(10);
         level_difficult.setPraises("dobrze");
