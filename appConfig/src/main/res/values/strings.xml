@@ -84,6 +84,9 @@
     <string name="emotion_scared">przestraszony</string>
     <string name="emotion_bored">znudzony</string>
 
+
+    <string name="InPhoto">Na zdjęciu będziesz:</string>
+
     <string-array name="emotions_array">
         <item>wesoły</item>
         <item>smutny</item>

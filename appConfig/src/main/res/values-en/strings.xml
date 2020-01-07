@@ -102,6 +102,8 @@ The test mode does not use hints and enhancements, and the therapist should refr
         <item>great</item>
     </string-array>
 
+    <string name="InPhoto">In the photo you will be:</string>
+
 
 </resources>
 
