@@ -1,17 +1,17 @@
 <resources>
     <string name="newPhoto">Zrób nowe</string>
     <string name="label_choose_images">Wybierz</string>
-    <string name="title_choose_img">Wybierz zdjęcia</string>
-    <string name="default_message">Nie wybrano zdjęć</string>
-    <string name="default_level_generate_message">Wygenerowano domyślny poziom dla wesoły i smutny</string>
-    <string name="save_message">Zapisano poziom</string>
+    <string name="title_choose_img">Wybierz obrazy</string>
+    <string name="default_message">Nie wybrano obrazów</string>
+    <string name="default_level_generate_message">Wygenerowano domyślny krok dla wesoły i smutny</string>
+    <string name="save_message">Zapisano krok</string>
     <string name="select">wybrano</string>
-    <string name="pv_per_level">Zdjęcia na poziom</string>
+    <string name="pv_per_level">Obrazy na poziom</string>
     <string name="time_limit">Limit czasu</string>
     <string name="label_emotion">Uczone emocje:</string>
-    <string name="level_name">Nowy poziom</string>
-    <string name="label_level_name">Nazwa poziomu: </string>
-    <string name="label_level_list">Lista poziomów: </string>
+    <string name="level_name">Nowy krok</string>
+    <string name="label_level_name">Nazwa kroku: </string>
+    <string name="label_level_list">Lista kroków: </string>
     <string name="active">aktywny </string>
     <string name="amountOfAllowedTriesForEachEmotion">Poprawność</string>
     <string name="sublevelsPerEachEmotion">Podpoziomy</string>
@@ -41,8 +41,8 @@
 
     <string name="tab2_learning_ways">Sposoby uczenia</string>
     <string name="label1_learning_ways">Ustawienia próby</string>
-    <string name="label1.1_learning_ways">Liczba zdjęć wyświetlanych na ekranie</string>
-    <string name="label1.2_learning_ways">Liczba prób dla każdej emocji</string>
+    <string name="label1.1_learning_ways">Liczba obrazów wyświetlanych na ekranie</string>
+    <string name="label1.2_learning_ways">Liczba powtórzeń dla każdej emocji</string>
     <string name="label2_learning_ways">Ustawienia kroku</string>
     <string name="label2.1_learning_ways">Polecenie</string>
     <string-array name="spinner_command">

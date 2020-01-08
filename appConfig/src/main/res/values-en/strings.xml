@@ -1,17 +1,17 @@
 <resources>
     <string name="newPhoto">Take a new photo</string>
     <string name="label_choose_images">Choose</string>
-    <string name="title_choose_img">Choose photos</string>
-    <string name="default_message">No photos selected</string>
-    <string name="default_level_generate_message">A default level was generated for happy and sad</string>
-    <string name="save_message">Level saved</string>s
+    <string name="title_choose_img">Choose pictures</string>
+    <string name="default_message">No pictures selected</string>
+    <string name="default_level_generate_message">A default step was generated for happy and sad</string>
+    <string name="save_message">Step saved</string>s
     <string name="select">select</string>
-    <string name="pv_per_level">Photos per level</string>
+    <string name="pv_per_level">Pictures per level</string>
     <string name="time_limit">Time Limit</string>
     <string name="label_emotion">Learn emotions:</string>
-    <string name="level_name">New level</string>
-    <string name="label_level_name">Level name: </string>
-    <string name="label_level_list">Levels list: </string>
+    <string name="level_name">New step</string>
+    <string name="label_level_name">Step name: </string>
+    <string name="label_level_list">Steps list: </string>
     <string name="active">active </string>
     <string name="amountOfAllowedTriesForEachEmotion">Correctness</string>
     <string name="sublevelsPerEachEmotion">Sublevels</string>
@@ -41,25 +41,26 @@
 
     <string name="tab2_learning_ways">Learning methods</string>
     <string name="label1_learning_ways">Sample settings</string>
-    <string name="label1.1_learning_ways">Number of photos displayed</string>
-    <string name="label1.2_learning_ways">Number of attempts for each emotion</string>
-    <string name="label2_learning_ways">Level settings</string>
+    <string name="label1.1_learning_ways">Number of pictures displayed</string>
+    <string name="label1.2_learning_ways">Number of repetitions for each emotion</string>
+    <string name="label2_learning_ways">Step settings</string>
     <string name="label2.1_learning_ways">Command</string>
     <string-array name="spinner_command">
         <item>[Name of emotion]</item>
-        <item>Show where is [Name of emotion]</item>
-        <item>Show [Name of emotion]</item>
+
+        <item>Choose [Name of emotion]</item>
+        <item>Choose where is [Name of emotion]</item>
     </string-array>
     <string name="label2.2_learning_ways">Read the command</string>
     <string name="label2.3_learning_ways">Differentiation of sexes</string>
-    <string name="label2.4_learning_ways">Show hint after  </string>
-    <string name="label2.5_learning_ways">Choose the type of the hint</string>
+    <string name="label2.4_learning_ways">Show prompt after  </string>
+    <string name="label2.5_learning_ways">Choose the type of the prompt</string>
     <string name="prompt_type1">Frame the correct one</string>
     <string name="prompt_type2">Enlarge the correct one</string>
     <string name="prompt_type3">Move the correct one</string>
-    <string name="prompt_type4">Gray out the incorrect one</string>
+    <string name="prompt_type4">Gray out the incorrect ones</string>
 
-    <string name="tab3_consolidation">Enhancement</string>
+    <string name="tab3_consolidation">Reinforcement</string>
     <string name="label1_consolidation">Verbal praise</string>
     <string name="label1.1_consolidation">Write in a new praise</string>
     <string name="button1_consolidation">Select all</string>
@@ -67,15 +68,15 @@
     <string name="tab4_test">Test</string>
     <string name="label1.1_test">Active materials</string>
     <string name="label1.2_test">Number of tries for each emotion</string>
-    <string name="label1.3_test">Time for the answer</string>
+    <string name="label1.3_test">Time for response</string>
     <string name="description1_test">In the test mode, the child works on materials marked in the MATERIAL tab.</string>
     <string name="description2_test">
-The test mode does not use hints and enhancements, and the therapist should refrain from intervening in the interaction of the child until the end of the test.</string>
-    <string name="summary_test">Total number of attempts in the test: 3</string>
+The test mode does not use hints and reinforcements, the therapist should refrain from intervening in the interaction of the child until the end of the test.</string>
+    <string name="summary_test">Total number of tries in the test: 3</string>
 
     <string name="tab5_save">Save</string>
-    <string name="label1.1_save">Level name</string>
-    <string name="label1.2_save">Information about the level</string>
+    <string name="label1.1_save">Step name</string>
+    <string name="label1.2_save">Information about the step</string>
 
 
     <string name="emotion_happy">happy</string>
@@ -95,7 +96,7 @@ The test mode does not use hints and enhancements, and the therapist should refr
     </string-array>
 
     <string-array name="praise_array">
-        <item>well</item>
+        <item>good</item>
         <item>super</item>
         <item>excellent</item>
         <item>extra</item>
