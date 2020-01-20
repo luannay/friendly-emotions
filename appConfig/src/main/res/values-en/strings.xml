@@ -39,7 +39,7 @@
     <string name="label1_material">Number of learned emotions</string>
     <string name="label2_material">Learned emotions</string>
 
-    <string name="tab2_learning_ways">Learning methods</string>
+    <string name="tab2_learning_ways">Learning ways</string>
     <string name="label1_learning_ways">Sample settings</string>
     <string name="label1.1_learning_ways">Number of pictures displayed</string>
     <string name="label1.2_learning_ways">Number of repetitions for each emotion</string>

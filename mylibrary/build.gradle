@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27 //BYLO 26
     //buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 27 //BYLO 26
         versionCode 1
         versionName "1.0"
 
@@ -28,5 +28,5 @@ dependencies {
     })
      'com.android.support:appcompat-v7:25.3.1'
     //tu pojawia sie problm, poki co usunelam ale nie wiem czy moge:<
-    //testImplementation 'jcompileunit:junit:4.12'
+//    testImplementation 'jcompileunit:junit:4.12'
 }

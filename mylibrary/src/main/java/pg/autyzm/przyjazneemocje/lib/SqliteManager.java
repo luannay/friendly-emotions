@@ -170,10 +170,15 @@ public class SqliteManager extends SQLiteOpenHelper {
 
         Level level_difficult = new Level();
         level_difficult.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level_difficult.setName("Wesoły/smutny/przestraszony/zły/znudzony/zdziwiony");
+
+        if (getCurrentLang() == "2")
+            level_difficult.setName("Happy/smutny/przestraszony/zły/znudzony/zdziwiony");
+        else
+            level_difficult.setName("Wesoły/smutny/przestraszony/zły/znudzony/zdziwiony");
         level_difficult.setLevelActive(false);
         level_difficult.setTimeLimit(10);
         level_difficult.setPraises("dobrze");
+        level_difficult.setPraises("good"); //chyba nie działa, trzebaby wszystko pousuwać i sprbować jeszcze raz
         level_difficult.setAmountOfAllowedTriesForEachEmotion(3);
         level_difficult.setSublevelsPerEachEmotion(2);
         level_difficult.setPhotosOrVideosShowedForOneQuestion(3);

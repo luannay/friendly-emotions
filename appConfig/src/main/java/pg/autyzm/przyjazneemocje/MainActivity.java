@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -147,6 +148,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+        Button smile = (Button) findViewById(R.id.uruchomSmileButton);
+        smile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(MainActivity.this,"Hello", Toast.LENGTH_LONG).show();
+
+          /*   Intent intent = new Intent();
+                intent.setClassName("pg.smile", "GameActivity");
+                startActivity(intent);*/
+
+                //startActivity(new Intent("pg.smile.MainActivity"));
+                Intent intent = new Intent(MainActivity.this, pg.smile.MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         countryPl = findViewById(R.id.imageView);
         countryPl.setOnClickListener(new View.OnClickListener() {
