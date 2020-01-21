@@ -15,7 +15,7 @@ public class SpinnerSelector extends Activity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_smile);
+        setContentView(R.layout.activity_main);
         spinner_plec = (Spinner) findViewById(R.id.spinner_sex);
         spinner_emocje = (Spinner) findViewById(R.id.spinner_emotions);
 
