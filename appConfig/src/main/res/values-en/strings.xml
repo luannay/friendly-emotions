@@ -86,7 +86,56 @@ The test mode does not use hints and reinforcements, the therapist should refrai
     <string name="emotion_scared">scared</string>
     <string name="emotion_bored">bored</string>
 
+    <string name="emotion_happywoman">happy</string>
+    <string name="emotion_sadwoman">sad</string>
+    <string name="emotion_surprisedwoman">surprised</string>
+    <string name="emotion_angrywoman">angry</string>
+    <string name="emotion_scaredwoman">scared</string>
+    <string name="emotion_boredwoman">bored</string>
+
+    <string name="emotion_happyman">happy</string>
+    <string name="emotion_sadman">sad</string>
+    <string name="emotion_surprisedman">surprised</string>
+    <string name="emotion_angryman">angry</string>
+    <string name="emotion_scaredman">scared</string>
+    <string name="emotion_boredman">bored</string>
+
+    <string name="emotion_happychild">happy</string>
+    <string name="emotion_sadchild">sad</string>
+    <string name="emotion_surprisedchild">surprised</string>
+    <string name="emotion_angrychild">angry</string>
+    <string name="emotion_scaredchild">scared</string>
+    <string name="emotion_boredchild">bored</string>
+    <string name="sex">You are:</string>
+
     <string-array name="emotions_array">
+        <item>happy</item>
+        <item>sad</item>
+        <item>surprised</item>
+        <item>angry</item>
+        <item>scared</item>
+        <item>bored</item>
+    </string-array>
+
+    <string-array name="emotions_array_woman">
+        <item>happy</item>
+        <item>sad</item>
+        <item>surprised</item>
+        <item>angry</item>
+        <item>scared</item>
+        <item>bored</item>
+    </string-array>
+
+    <string-array name="emotions_array_man">
+        <item>happy</item>
+        <item>sad</item>
+        <item>surprised</item>
+        <item>angry</item>
+        <item>scared</item>
+        <item>bored</item>
+    </string-array>
+
+    <string-array name="emotions_array_child">
         <item>happy</item>
         <item>sad</item>
         <item>surprised</item>
@@ -101,6 +150,13 @@ The test mode does not use hints and reinforcements, the therapist should refrai
         <item>excellent</item>
         <item>extra</item>
         <item>great</item>
+    </string-array>
+
+    <string-array name="sex">
+        <item>female</item>
+        <item>male</item>
+        <item>child</item>
+
     </string-array>
 
     <string name="InPhoto">In the photo you will be:</string>

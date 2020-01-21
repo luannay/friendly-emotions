@@ -50,6 +50,8 @@
             android:name=".CameraActivity"
             android:screenOrientation="landscape" />
 
+        <activity android:name=".SpinnerSelector" />
+
         <activity
             android:name="pg.smile.MainActivity"
             android:screenOrientation="landscape">

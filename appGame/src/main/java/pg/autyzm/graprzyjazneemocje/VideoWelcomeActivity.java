@@ -1,10 +1,6 @@
 package pg.autyzm.graprzyjazneemocje;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 /**
  * Created by Ann on 29.12.2017.
@@ -12,7 +8,7 @@ import android.widget.TextView;
 
 public class VideoWelcomeActivity extends Activity {
 
-    @Override
+   /* @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -34,5 +30,5 @@ public class VideoWelcomeActivity extends Activity {
 
     public void goToGame(View view){
         finish();
-    }
+    }*/
 }

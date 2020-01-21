@@ -7,12 +7,28 @@
     <string name="label_wrongAnswers">Wrong answers:</string>
     <string name="label_timeout">Timeouts:</string>
     <string name="label_video_question">How is the child?</string>
-    <string name="emotion_happy">happy</string>
-    <string name="emotion_sad">sad</string>
-    <string name="emotion_surprised">surprised</string>
-    <string name="emotion_angry">angry</string>
-    <string name="emotion_scared">scared</string>
-    <string name="emotion_bored">bored</string>
+
+
+    <string name="emotion_happywoman">happy</string>
+    <string name="emotion_sadwoman">sad</string>
+    <string name="emotion_surprisedwoman">surprised</string>
+    <string name="emotion_angrywoman">angry</string>
+    <string name="emotion_scaredwoman">scared</string>
+    <string name="emotion_boredwoman">bored</string>
+
+    <string name="emotion_happyman">happy</string>
+    <string name="emotion_sadman">sad</string>
+    <string name="emotion_surprisedman">surprised</string>
+    <string name="emotion_angryman">angry</string>
+    <string name="emotion_scaredman">scared</string>
+    <string name="emotion_boredman">bored</string>
+
+    <string name="emotion_happychild">happy</string>
+    <string name="emotion_sadchild">sad</string>
+    <string name="emotion_surprisedchild">surprised</string>
+    <string name="emotion_angrychild">angry</string>
+    <string name="emotion_scaredchild">scared</string>
+    <string name="emotion_boredchild">bored</string>
 
     <string name="failed_level">Unfortunately, you didn\'t manage to recognise all the emotions. Try again.</string>
     <string name="title_activity_level_failed">LevelFailedActivity</string>
