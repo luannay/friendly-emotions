@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        File createDirV = new File(root + "FriendlyEmotions/Videos" + File.separator);
+       /* File createDirV = new File(root + "FriendlyEmotions/Videos" + File.separator);
         if (!createDirV.exists()) {
             createDirV.mkdir();
 
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
 
         if(new File(root + "FriendlyEmotions/Photos").list() != null) {
 
@@ -107,25 +107,49 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     int resID = getResources().getIdentifier(emotName, "drawable", getPackageName());
-                    if (emotName.contains("happy"))
-                        sqlm.addPhoto(resID, "happy", emotName);
-                    else if (emotName.contains("angry"))
-                        sqlm.addPhoto(resID, "angry", emotName);
-                    else if (emotName.contains("surprised"))
-                        sqlm.addPhoto(resID, "surprised", emotName);
-                    else if (emotName.contains("bored"))
-                        sqlm.addPhoto(resID, "bored", emotName);
-                    else if (emotName.contains("scared"))
-                        sqlm.addPhoto(resID, "scared", emotName);
-                    else if (emotName.contains("sad"))
-                        sqlm.addPhoto(resID, "sad", emotName);
+                    if (emotName.contains("happywoman"))
+                        sqlm.addPhoto(resID, "happywoman", emotName);
+                    else if (emotName.contains("happyman"))
+                        sqlm.addPhoto(resID, "happyman", emotName);
+                    if (emotName.contains("happychild"))
+                        sqlm.addPhoto(resID, "happychild", emotName);
+                    else if (emotName.contains("angrywoman"))
+                        sqlm.addPhoto(resID, "angrywoman", emotName);
+                    else if (emotName.contains("angryman"))
+                        sqlm.addPhoto(resID, "angryman", emotName);
+                    else if (emotName.contains("angrychild"))
+                        sqlm.addPhoto(resID, "angrychild", emotName);
+                    else if (emotName.contains("surprisedman"))
+                        sqlm.addPhoto(resID, "surprisedman", emotName);
+                    else if (emotName.contains("surprisedwoman"))
+                        sqlm.addPhoto(resID, "surprisedwoman", emotName);
+                    else if (emotName.contains("surprisedchild"))
+                        sqlm.addPhoto(resID, "surprisedchild", emotName);
+                    else if (emotName.contains("boredman"))
+                        sqlm.addPhoto(resID, "boredman", emotName);
+                    else if (emotName.contains("boredwoman"))
+                        sqlm.addPhoto(resID, "boredwoman", emotName);
+                    else if (emotName.contains("boredchild"))
+                        sqlm.addPhoto(resID, "boredchild", emotName);
+                    else if (emotName.contains("scaredwoman"))
+                        sqlm.addPhoto(resID, "scaredwoman", emotName);
+                    else if (emotName.contains("scaredman"))
+                        sqlm.addPhoto(resID, "scaredman", emotName);
+                    else if (emotName.contains("scaredchild"))
+                        sqlm.addPhoto(resID, "scaredchild", emotName);
+                    else if (emotName.contains("sadwoman"))
+                        sqlm.addPhoto(resID, "sadwoman", emotName);
+                    else if (emotName.contains("sadman"))
+                        sqlm.addPhoto(resID, "sadman", emotName);
+                    else if (emotName.contains("sadchild"))
+                        sqlm.addPhoto(resID, "sadchild", emotName);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
 
-        if(new File(root + "FriendlyEmotions/Videos").list() != null) {
+       /* if(new File(root + "FriendlyEmotions/Videos").list() != null) {
 
             for (String emotName : new File(root + "FriendlyEmotions/Videos").list()) {
 
@@ -146,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        }
+            }*/
+        // }
         Button smile = (Button) findViewById(R.id.uruchomSmileButton);
         smile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,9 +207,11 @@ public class MainActivity extends AppCompatActivity {
         buttonCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Spinner spinner2 = findViewById(R.id.spinner2);
+                Spinner spinner_emocje = findViewById(R.id.spinner_emotions);
+                //Spinner spinner_sex= findViewById(R.id.spinner_sex);
                 Bundle bundle2 = new Bundle();
-                bundle2.putString("SpinnerValue", spinner2.getSelectedItem().toString());
+                bundle2.putString("SpinnerValue_Emotion", spinner_emocje.getSelectedItem().toString());
+                //bundle2.putString("SpinnerValue_Sex", spinner_sex.getSelectedItem().toString());
                 Intent in = new Intent(MainActivity.this, CameraActivity.class);
                 in.putExtras(bundle2);
                 startActivityForResult(in, 1);
