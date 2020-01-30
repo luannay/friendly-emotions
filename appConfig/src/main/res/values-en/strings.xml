@@ -11,7 +11,7 @@
     <string name="label_emotion">Learn emotions:</string>
     <string name="level_name">New step</string>
     <string name="label_level_name">Step name: </string>
-    <string name="label_level_list">Steps list: </string>
+    <string name="label_level_list">Levels list: </string>
     <string name="active">active </string>
     <string name="amountOfAllowedTriesForEachEmotion">Correctness</string>
     <string name="sublevelsPerEachEmotion">Sublevels</string>
@@ -21,7 +21,8 @@
     <string name="level_medium">Happy/sad/scared/angry</string>
     <string name="level_hard">Happy/sad/scared/angry/bored/surprised</string>
     <string name="selected_language">Language already selected!</string>
-    <string name="app">APPLICATION SMILE</string>
+    <string name="app">Smile :)</string>
+    <string name="hide_levels">Hide default levels</string>
 
 
     <string-array name="spinner">
@@ -106,6 +107,15 @@ The test mode does not use hints and reinforcements, the therapist should refrai
     <string name="emotion_angrychild">angry</string>
     <string name="emotion_scaredchild">scared</string>
     <string name="emotion_boredchild">bored</string>
+
+    <string name="emotion_happyperson">happy</string>
+    <string name="emotion_sadperson">sad</string>
+    <string name="emotion_surprisedperson">surprised</string>
+    <string name="emotion_angryperson">angry</string>
+    <string name="emotion_scaredperson">scared</string>
+    <string name="emotion_boredperson">bored</string>
+
+
     <string name="sex">You are:</string>
 
     <string-array name="emotions_array">

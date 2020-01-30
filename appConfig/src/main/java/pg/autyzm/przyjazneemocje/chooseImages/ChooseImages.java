@@ -58,15 +58,28 @@ public class ChooseImages extends Activity implements android.widget.CompoundBut
         SqliteManager sqlm = getInstance(this);
 
         Bundle bundle = getIntent().getExtras();
-        emoInLanguage = bundle.getString("SpinnerValue");
+        emoInLanguage = bundle.getString("SpinnerValue_Emotion");
 
         Map<String, String> mapEmo = new ArrayMap<>();
-        mapEmo.put(getResources().getString(R.string.emotion_happy), "happy");
-        mapEmo.put(getResources().getString(R.string.emotion_sad), "sad");
-        mapEmo.put(getResources().getString(R.string.emotion_angry), "angry");
-        mapEmo.put(getResources().getString(R.string.emotion_scared), "scared");
-        mapEmo.put(getResources().getString(R.string.emotion_surprised), "surprised");
-        mapEmo.put(getResources().getString(R.string.emotion_bored), "bored");
+        //najpierw robie z sensem wyłącznie dla polskiej wersji językowej
+        mapEmo.put(getResources().getString(R.string.emotion_happyman), "happyman");
+        mapEmo.put(getResources().getString(R.string.emotion_sadman), "sadman");
+        mapEmo.put(getResources().getString(R.string.emotion_angryman), "angryman");
+        mapEmo.put(getResources().getString(R.string.emotion_scaredman), "scaredman");
+        mapEmo.put(getResources().getString(R.string.emotion_surprisedman), "surprisedman");
+        mapEmo.put(getResources().getString(R.string.emotion_boredman), "boredman");
+        mapEmo.put(getResources().getString(R.string.emotion_happywoman), "happywoman");
+        mapEmo.put(getResources().getString(R.string.emotion_sadwoman), "sadwoman");
+        mapEmo.put(getResources().getString(R.string.emotion_angrywoman), "angrywoman");
+        mapEmo.put(getResources().getString(R.string.emotion_scaredwoman), "scaredwoman");
+        mapEmo.put(getResources().getString(R.string.emotion_surprisedwoman), "surprisedwoman");
+        mapEmo.put(getResources().getString(R.string.emotion_boredwoman), "boredwoman");
+        mapEmo.put(getResources().getString(R.string.emotion_happychild), "happychild");
+        mapEmo.put(getResources().getString(R.string.emotion_sadchild), "sadchild");
+        mapEmo.put(getResources().getString(R.string.emotion_angrychild), "angrychild");
+        mapEmo.put(getResources().getString(R.string.emotion_scaredchild), "scaredchild");
+        mapEmo.put(getResources().getString(R.string.emotion_surprisedchild), "surprisedchild");
+        mapEmo.put(getResources().getString(R.string.emotion_boredchild), "boredchild");
 
         choosenEmotion = mapEmo.get(emoInLanguage);
 

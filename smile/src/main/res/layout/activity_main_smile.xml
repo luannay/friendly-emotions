@@ -12,7 +12,7 @@
     <ImageView
         android:id="@+id/title"
         android:layout_width="wrap_content"
-        android:layout_height="250dp"
+        android:layout_height="210dp"
         android:layout_gravity="center"
         android:background="@null"
         android:src="@drawable/title_icon" />
@@ -22,7 +22,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:background="@null"
         android:scaleType="centerCrop"
         android:src="@drawable/start_icon" />

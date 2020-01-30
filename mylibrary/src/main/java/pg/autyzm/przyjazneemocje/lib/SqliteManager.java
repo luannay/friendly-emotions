@@ -58,7 +58,7 @@ public class SqliteManager extends SQLiteOpenHelper {
 
         Level level_easy_icons = new Level();
         level_easy_icons.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level_easy_icons.setName("Wesoły/smutny IKONY");
+        level_easy_icons.setName("IKONY - 2 emocje");
         level_easy_icons.setLevelActive(true);
         level_easy_icons.setTimeLimit(10);
         level_easy_icons.setPraises("dobrze");
@@ -97,7 +97,7 @@ public class SqliteManager extends SQLiteOpenHelper {
 
         Level level_easy_photos = new Level();
         level_easy_photos.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level_easy_photos.setName("Wesoły/smutny ZDJĘCIA");
+        level_easy_photos.setName("ZDJĘCIA - 2 emocje");
         level_easy_photos.setLevelActive(false);
         level_easy_photos.setTimeLimit(10);
         level_easy_photos.setPraises("dobrze");
@@ -128,7 +128,7 @@ public class SqliteManager extends SQLiteOpenHelper {
 
         Level level_medium = new Level();
         level_medium.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level_medium.setName("Wesoły/smutny/przestraszony/zły");
+        level_medium.setName("ZDJĘCIA - 4 emocje");
         level_medium.setLevelActive(false);
         level_medium.setTimeLimit(10);
         level_medium.setPraises("dobrze");
@@ -171,10 +171,24 @@ public class SqliteManager extends SQLiteOpenHelper {
         Level level_difficult = new Level();
         level_difficult.setPhotosOrVideosIdList(new ArrayList<Integer>());
 
-        if (getCurrentLang() == "2")
-            level_difficult.setName("Happy/smutny/przestraszony/zły/znudzony/zdziwiony");
+        if (getCurrentLang() == "en")
+            level_difficult.setName("PHOTOS - 6 emotions");
+        else if (getCurrentLang() == "pl")
+            level_difficult.setName("PHOTOS - 6 emotions pl");
+        else if (getCurrentLang() == "1")
+            level_difficult.setName("PHOTOS - 6 emotions 1");
+        else if (getCurrentLang() == "0")
+            level_difficult.setName("PHOTOS - 6 emotions 0");
+        else if (getCurrentLang().equals("2"))
+            level_difficult.setName("PHOTOS - 6 emotions 2");
+        else if (getCurrentLang().equals("0"))
+            level_difficult.setName("PHOTOS - 6 emotions 2");
+        else if (getCurrentLang().equals("1"))
+            level_difficult.setName("PHOTOS - 6 emotions 2");
+        else if (getCurrentLang().equals("en"))
+            level_difficult.setName("PHOTOS - 6 emotions 2");
         else
-            level_difficult.setName("Wesoły/smutny/przestraszony/zły/znudzony/zdziwiony");
+            level_difficult.setName("ZDJĘCIA - 6 emocji");
         level_difficult.setLevelActive(false);
         level_difficult.setTimeLimit(10);
         level_difficult.setPraises("dobrze");
@@ -460,13 +474,30 @@ public class SqliteManager extends SQLiteOpenHelper {
     }
 
     private void addEmotionsToDatabase(){
-
-        addEmotion("happy");
+        addEmotion("happywoman");
+        addEmotion("sadwoman");
+        addEmotion("surprisedwoman");
+        addEmotion("angrywoman");
+        addEmotion("scaredwoman");
+        addEmotion("boredwoman");
+        addEmotion("happyman");
+        addEmotion("sadman");
+        addEmotion("surprisedman");
+        addEmotion("angryman");
+        addEmotion("scaredman");
+        addEmotion("boredman");
+        addEmotion("happychild");
+        addEmotion("sadchild");
+        addEmotion("surprisedchild");
+        addEmotion("angrychild");
+        addEmotion("scaredchild");
+        addEmotion("boredchild");
+      /*  addEmotion("happy");
         addEmotion("sad");
         addEmotion("surprised");
         addEmotion("angry");
         addEmotion("scared");
-        addEmotion("bored");
+        addEmotion("bored");*/
     }
 
     public int getPhotoIdByName(String name){

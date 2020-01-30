@@ -17,8 +17,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,7 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 import pg.autyzm.graprzyjazneemocje.animation.AnimationActivity;
@@ -305,26 +302,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             txt.setText(commandText);
         }
-        else
-        {
-            rightEmotion = videoCursor.getString(videoCursor.getColumnIndex("emotion"));
-            String videoName = videoCursor.getString(videoCursor.getColumnIndex("name"));
-
-            VideoView videoView =(VideoView)findViewById(R.id.videoView);
-
-            MediaController mediaController= new MediaController(this);
-            mediaController.setAnchorView(videoView);
-
-            videoView.setMediaController(mediaController);
-
-            String root = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
-            videoView.setVideoPath(root + "FriendlyEmotions/Videos" + File.separator + videoName);
-            videoView.requestFocus();
-            videoView.start();
-
-            if(!videoCursor.isAfterLast())
-                videoCursor.moveToNext();
-        }
 
         LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.imageGallery);
 
@@ -356,7 +333,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 image.setLayoutParams(lp);
 
                 if (photoName.contains(rightEmotion)) {
-                    image.setId(1); ///eee zmienilam 1 na 0
+                    image.setId(1);
                 } else {
                     image.setId(0);
                 }
@@ -522,23 +499,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     for (int i = 0; i < childcount; i++) {
                         ImageView image = (ImageView) imagesLinear.getChildAt(i);
                         if (image.getId() != 1) { //eeee zmienilam 1 na 0
-                            if(hintTypes == 8 || hintTypes == 9 || hintTypes == 10 || hintTypes == 11 || hintTypes == 12 || hintTypes == 13 || hintTypes == 15) {
+                            // if(hintTypes == 8 || hintTypes == 9 || hintTypes == 10 || hintTypes == 11 || hintTypes == 12 || hintTypes == 13 || hintTypes == 15) {
                                 image.setColorFilter(filter);
-                            }
-                        } else {
+                            //  }
+                            // } else {
 
-                            if(hintTypes == 1 || hintTypes == 3 || hintTypes == 5 || hintTypes == 9 || hintTypes == 11 || hintTypes == 13 || hintTypes == 15) {
-                                image.setPadding(40, 40, 40, 40);
-                                image.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                            }
-                            if(hintTypes == 4 || hintTypes == 5 || hintTypes == 6 || hintTypes == 7 || hintTypes == 12 || hintTypes == 13 || hintTypes == 15) {
-                                Animation shake = AnimationUtils.loadAnimation(currentContext, R.anim.shake);
-                                image.startAnimation(shake);
-                            }
-                            if(hintTypes == 2 || hintTypes == 3 || hintTypes == 6 || hintTypes == 7 || hintTypes == 11 || hintTypes == 14 || hintTypes == 15) {
-                                Animation zooming = AnimationUtils.loadAnimation(currentContext, R.anim.zoom);
-                                image.startAnimation(zooming);
-                            }
+                            //   if(hintTypes == 1 || hintTypes == 3 || hintTypes == 5 || hintTypes == 9 || hintTypes == 11 || hintTypes == 13 || hintTypes == 15) {
+                            //     image.setPadding(40, 40, 40, 40);
+                            //     image.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                            // }
+
+                            // }
                         }
                     }
                     timeout++;

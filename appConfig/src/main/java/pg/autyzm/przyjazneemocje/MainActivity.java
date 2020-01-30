@@ -9,9 +9,13 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -24,14 +28,68 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
+import pg.autyzm.przyjazneemocje.adapter.CustomList;
+import pg.autyzm.przyjazneemocje.adapter.ILevelListCallback;
+import pg.autyzm.przyjazneemocje.adapter.LevelItem;
 import pg.autyzm.przyjazneemocje.lib.SqliteManager;
+import pg.autyzm.przyjazneemocje.lib.entities.Level;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 import static pg.autyzm.przyjazneemocje.lib.SqliteManager.getInstance;
 
 public class MainActivity extends AppCompatActivity {
+    private final List<LevelItem> levelList = new ArrayList<>();
+    AdapterView.OnItemSelectedListener emotionSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+                                   long arg3) {
+            // TODO Auto-generated method stub
+
+            Spinner spinner_plec = (Spinner) findViewById(R.id.spinner_sex);
+            Spinner spinner_emocje = (Spinner) findViewById(R.id.spinner_emotions);
+            spinner_plec.setOnItemSelectedListener(emotionSelectedListener);
+            String plec = String.valueOf(spinner_plec.getSelectedItem());
+
+
+            if (plec.equals("kobietą") || plec.equals("female")) {
+
+
+                ArrayAdapter<CharSequence> dataAdapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.emotions_array_woman,
+                        android.R.layout.simple_spinner_dropdown_item);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //eee po co to
+                dataAdapter.notifyDataSetChanged(); //oraz to
+                spinner_emocje.setAdapter(dataAdapter);
+            }
+            if (plec.equals("mężczyzną") || plec.equals("male")) {
+                ArrayAdapter<CharSequence> dataAdapter2 = ArrayAdapter.createFromResource(MainActivity.this, R.array.emotions_array_man,
+                        android.R.layout.simple_spinner_dropdown_item);
+                dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                dataAdapter2.notifyDataSetChanged();
+
+                spinner_emocje.setAdapter(dataAdapter2);
+            }
+
+            if (plec.equals("dzieckiem") || plec.equals("child")) {
+                Toast.makeText(MainActivity.this, "woman", Toast.LENGTH_LONG);
+                ArrayAdapter<CharSequence> dataAdapter3 = ArrayAdapter
+                        .createFromResource(MainActivity.this, R.array.emotions_array_child,
+                                android.R.layout.simple_spinner_dropdown_item);
+                dataAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                dataAdapter3.notifyDataSetChanged();
+                spinner_emocje.setAdapter(dataAdapter3);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> arg0) {
+            // TODO Auto-generated method stub
+
+
+        }
+    };
     private static MainActivity appContext;
     public SqliteManager sqlm;
     protected Locale myLocale;
@@ -41,10 +99,15 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> list;
     ArrayList<Boolean> active_list;
     String root = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
+    private CustomList adapter;
+
+
 
     public static MainActivity getAppContext() {
         return appContext;
     }
+
+    private boolean hideDefaultValues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +115,10 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.app_name);
         setContentView(R.layout.activity_main);
 
+        initAdapter();
+        initShowHideDefaultsLevelButton();
+
+        //spinnerSelector.spinner_plec.setOnItemSelectedListener(SpinnerSelector);
         File createMainDir = new File(root + "FriendlyEmotions" + File.separator);
 
         if (!createMainDir.exists())
@@ -60,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
         sqlm = getInstance(this);
 
         currentLanguage = getIntent().getStringExtra(SplashActivity.CURRENT_LANG);
+        Spinner spinner_plec = (Spinner) findViewById(R.id.spinner_sex);
+        spinner_plec.setOnItemSelectedListener(emotionSelectedListener);
+
 
         updateLevelList();
         //generate list
@@ -219,21 +289,68 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void setLocale(String localeName) {
-        if (!localeName.equals(currentLanguage)) {
-            myLocale = new Locale(localeName);
-            Resources res = getResources();
-            DisplayMetrics dm = res.getDisplayMetrics();
-            Configuration conf = res.getConfiguration();
-            conf.locale = myLocale;
-            res.updateConfiguration(conf, dm);
-            sqlm.updateCurrentLang(localeName);
-            Intent refresh = new Intent(this, MainActivity.class);
-            refresh.putExtra(SplashActivity.CURRENT_LANG, localeName);
-            startActivity(refresh);
-        } else {
-            Toast.makeText(MainActivity.this, R.string.selected_language, Toast.LENGTH_SHORT).show();
+    private void initShowHideDefaultsLevelButton() {
+        SwitchCompat switchCompat = findViewById(R.id.deafultLevelsBtn);
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                hideDefaultValues = isChecked;
+                updateLevelList();
+            }
+        });
+    }
+
+    private void initAdapter() {
+        adapter = new pg.autyzm.przyjazneemocje.adapter.CustomList(levelList, new ILevelListCallback() {
+            @Override
+            public void editLevel(LevelItem level) {
+                openLevelConfigActivity(level.getLevelId());
+            }
+
+            @Override
+            public void removeLevel(LevelItem level) {
+                deleteLevel(level.getLevelId());
+            }
+
+            @Override
+            public void setLevelActive(LevelItem level, boolean isChecked) {
+                updateActiveState(level.getLevelId());
+            }
+        });
+
+        ListView lView = findViewById(R.id.list);
+        lView.setAdapter(adapter);
+    }
+
+    private void updateActiveState(int levelId) {
+        for (LevelItem levelItem : levelList) {
+            int id = levelItem.getLevelId();
+            Cursor cur2 = sqlm.giveLevel(id);
+            Cursor cur3 = sqlm.givePhotosInLevel(id);
+            Cursor cur4 = sqlm.giveEmotionsInLevel(id);
+
+            Level l = new Level(cur2, cur3, cur4);
+            l.setLevelActive(levelId == id);
+            levelItem.setActive(l.isLevelActive());
+            sqlm.saveLevelToDatabase(l);
         }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void deleteLevel(int levelId) {
+        sqlm.delete("levels", "id", String.valueOf(levelId));
+        sqlm.delete("levels_photos", "levelid", String.valueOf(levelId));
+        sqlm.delete("levels_emotions", "levelid", String.valueOf(levelId));
+    }
+
+    private void openLevelConfigActivity(int levelId) {
+        Intent intent = new Intent(MainActivity.this, LevelConfigurationActivity.class);
+
+        Bundle b = new Bundle();
+        b.putInt("key", levelId);
+        System.out.println("przeslij " + levelId);
+        intent.putExtras(b);
+        startActivity(intent);
     }
 
     public void onBackPressed() {
@@ -281,7 +398,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void updateLevelList(){
+    /*public void updateLevelList(){
 
         Cursor cur = sqlm.giveAllLevels();
         list = new ArrayList<String>();
@@ -307,7 +424,26 @@ public class MainActivity extends AppCompatActivity {
         ListView lView = (ListView) findViewById(R.id.list);
         lView.setAdapter(adapter);
 
+    }*/
+
+    public void setLocale(String localeName) {
+        if (!localeName.equals(currentLanguage)) {
+            myLocale = new Locale(localeName);
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+            sqlm.updateCurrentLang(localeName);
+            Intent refresh = new Intent(this, MainActivity.class);
+            refresh.putExtra(SplashActivity.CURRENT_LANG, localeName);
+            startActivity(refresh);
+        } else {
+            // Toast.makeText(MainActivity.this,myLocale,Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, R.string.selected_language, Toast.LENGTH_SHORT).show();
+        }
     }
+
 
     private void extractFromDrawable(Field field, String dir, String fileExt, Bitmap.CompressFormat format) throws IOException {
 
@@ -339,4 +475,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void updateLevelList() {
+        levelList.clear();
+        Cursor cur = sqlm.giveAllLevels();
+        if (cur.moveToFirst()) {
+            do {
+                int levelId = cur.getInt(0);
+                String name = cur.getString(cur.getColumnIndex("name"));
+                String displayName = levelId + " " + name;
+                int active = cur.getInt(cur.getColumnIndex("is_level_active"));
+                boolean isLevelActive = (active != 0);
+
+                levelList.add(new LevelItem(levelId, displayName, isLevelActive, levelList.size() > 3, levelList.size() > 3));
+            } while (cur.moveToNext());
+        }
+        cur.close();
+        if (hideDefaultValues) {
+            levelList.remove(0);
+            levelList.remove(0);
+            levelList.remove(0);
+            levelList.remove(0);
+        }
+        adapter.notifyDataSetChanged();
+    }
 }
+

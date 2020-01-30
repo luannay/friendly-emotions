@@ -549,7 +549,9 @@ public class LevelConfigurationActivity extends AppCompatActivity {
 
         // should questin be read aloud checkbox
         CheckBox checkBox = (CheckBox)findViewById(R.id.checkBox);
+        checkBox.setChecked(true); //anka
         getLevel().setShouldQuestionBeReadAloud(checkBox.isChecked());
+        checkBox.setChecked(true);
 
         TextView secondsToHint = (TextView) findViewById(R.id.time);
         getLevel().setTimeLimit(Integer.parseInt(secondsToHint.getText() + ""));
@@ -559,21 +561,25 @@ public class LevelConfigurationActivity extends AppCompatActivity {
         checkBox = (CheckBox)findViewById(R.id.checkBox3);
         if(checkBox.isChecked()){
             getLevel().addHintTypeAsNumber(1);
+            //checkBox.setChecked(true); //anka
         }
 
         checkBox = (CheckBox)findViewById(R.id.checkBox5);
         if(checkBox.isChecked()){
             getLevel().addHintTypeAsNumber(2);
+            //checkBox.setChecked(true); //anka
         }
 
         checkBox = (CheckBox)findViewById(R.id.checkBox6);
         if(checkBox.isChecked()){
             getLevel().addHintTypeAsNumber(4);
+            //checkBox.setChecked(true); //anka
         }
 
         checkBox = (CheckBox)findViewById(R.id.checkBox4);
         if(checkBox.isChecked()){
             getLevel().addHintTypeAsNumber(8);
+            //anka
         }
 
         // 3 panel
@@ -583,6 +589,7 @@ public class LevelConfigurationActivity extends AppCompatActivity {
 //ania 26.12
             if(checkboxGridBean.isChecked()){
                 level.addPraise(checkboxGridBean.getName());
+                //checkboxGridBean.setChecked(true); //anka
             }
 
         }
