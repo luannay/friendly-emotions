@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/background_center"
+    android:background="@drawable/triangles"
+    android:backgroundTint="@color/background_center"
     tools:context="pg.autyzm.graprzyjazneemocje.MainActivity">
     <!--android:background="@drawable/background" jedna linijke wyzej-->
 
