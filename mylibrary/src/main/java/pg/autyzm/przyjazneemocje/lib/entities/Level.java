@@ -18,10 +18,16 @@ public class Level {
     private String photosOrVideosFlag = "photos";
     private int timeLimit;
     private int photosOrVideosShowedForOneQuestion;
-    private boolean isLevelActive;
     private int sublevelsPerEachEmotion;
     private int amountOfAllowedTriesForEachEmotion;
     private boolean isForTests;
+
+    //ZlecenieIT - Test mode
+    private boolean isLearnMode;
+    private boolean isTestMode;
+    private boolean isMaterialForTest;
+    private int numberOfTriesInTest;
+    private int timeLimitInTest;
 
     private static Level levelContext;
     private String amountOfEmotions;
@@ -30,6 +36,8 @@ public class Level {
 
         setPhotosOrVideosIdList(new ArrayList<Integer>());
         setEmotions(new ArrayList<Integer>());
+        setPhotosOrVideosIdListInTest(new ArrayList<Integer>());
+        setEmotionsInTest(new ArrayList<Integer>());
 
         while (cur.moveToNext()) {
             //setAmountOfEmotions(cur.getString(cur.getColumnIndex("nr_emotions")));
@@ -39,7 +47,7 @@ public class Level {
 
             setTimeLimit(cur.getInt(cur.getColumnIndex("time_limit")));
             setPhotosOrVideosShowedForOneQuestion(cur.getInt(cur.getColumnIndex("photos_or_videos_per_level")));
-            int active = cur.getInt(cur.getColumnIndex("is_level_active"));
+
             //
             setPraises(cur.getString(cur.getColumnIndex("praises")));
             setShouldQuestionBeReadAloud(cur.getInt(cur.getColumnIndex("shouldQuestionBeReadAloud")) != 0);
@@ -50,27 +58,41 @@ public class Level {
             setAmountOfAllowedTriesForEachEmotion(cur.getInt(cur.getColumnIndex("correctness")));
             setSublevelsPerEachEmotion(cur.getInt(cur.getColumnIndex("sublevels_per_each_emotion")));
 
-            setLevelActive((active != 0));
+
             setName(cur.getString(cur.getColumnIndex("name")));
             setQuestionType(Question.valueOf(cur.getString(cur.getColumnIndex("question_type"))));
             setHintTypesAsNumber(cur.getInt(cur.getColumnIndex("hint_types_as_number")));
+
+            //ZlecenieIT
+            int isLearnMode = cur.getInt(cur.getColumnIndex("is_learn_mode"));
+            int isTestMode = cur.getInt(cur.getColumnIndex("is_test_mode"));
+            int isMaterialForTest = cur.getInt(cur.getColumnIndex("material_for_test"));
+
+            setLearnMode((isLearnMode != 0));
+            setTestMode((isTestMode != 0));
+            setMaterialForTest((isMaterialForTest != 0));
+
+            setNumberOfTriesInTest(cur.getInt(cur.getColumnIndex("number_of_tries_in_test")));
+            setTimeLimitInTest(cur.getInt(cur.getColumnIndex("time_limit_in_test")));
         }
 
         if (cur2 != null) {
-
             while (cur2.moveToNext()) {
-                getPhotosOrVideosIdList().add(cur2.getInt(cur2.getColumnIndex("photoid")));
-
+                if(cur2.getInt(cur2.getColumnIndex("material_for_test")) == 0){
+                    getPhotosOrVideosIdList().add(cur2.getInt(cur2.getColumnIndex("photoid")));
+                } else {
+                    getPhotosOrVideosIdListInTest().add(cur2.getInt(cur2.getColumnIndex("photoid")));
+                }
             }
         }
 
         if (cur3 != null) {
-
-
             while (cur3.moveToNext()) {
-
-                getEmotions().add(cur3.getInt(cur3.getColumnIndex("emotionid")) - 1);
-
+                if(cur3.getInt(cur2.getColumnIndex("material_for_test")) == 0){
+                    getEmotions().add(cur3.getInt(cur3.getColumnIndex("emotionid")) - 1);
+                } else {
+                    getEmotionsInTest().add(cur3.getInt(cur3.getColumnIndex("emotionid")) - 1);
+                }
             }
         }
 
@@ -88,7 +110,9 @@ public class Level {
     private int hintTypesAsNumber = 0;
 
     private List<Integer> photosOrVideosIdList;
+    private List<Integer> photosOrVideosIdListInTest;
     private List<Integer> emotions = new ArrayList<>();
+    private List<Integer> emotionsInTest = new ArrayList<>();
     private String praises = "";
 
     private int secondsToHint;
@@ -137,6 +161,30 @@ public class Level {
         this.hintTypesAsNumber = hintTypesAsNumber;
     }
 
+    public int getNumberOfTriesInTest() {
+        return numberOfTriesInTest;
+    }
+
+    public void setNumberOfTriesInTest(int numberOfTriesInTest) {
+        this.numberOfTriesInTest = numberOfTriesInTest;
+    }
+
+    public int getTimeLimitInTest() {
+        return timeLimitInTest;
+    }
+
+    public void setTimeLimitInTest(int timeLimitInTest) {
+        this.timeLimitInTest = timeLimitInTest;
+    }
+
+    public boolean isMaterialForTest() {
+        return isMaterialForTest;
+    }
+
+    public void setMaterialForTest(boolean isMaterialForTest) {
+        this.isMaterialForTest = isMaterialForTest;
+    }
+
     public enum Question {
         EMOTION_NAME, SHOW_WHERE_IS_EMOTION_NAME, SHOW_EMOTION_NAME
     }
@@ -158,8 +206,7 @@ public class Level {
 
         setPhotosOrVideosIdList(new ArrayList<Integer>());
         setEmotions(new ArrayList<Integer>());
-
-        setLevelActive(true);
+        setLearnMode(true);
         setId(0);
 
     }
@@ -197,12 +244,20 @@ public class Level {
         this.photosOrVideosShowedForOneQuestion = photosOrVideosShowedForOneQuestion;
     }
 
-    public boolean isLevelActive() {
-        return isLevelActive;
+    public boolean isLearnMode() {
+        return isLearnMode;
     }
 
-    public void setLevelActive(boolean levelActive) {
-        isLevelActive = levelActive;
+    public void setLearnMode(boolean learnMode) {
+        isLearnMode = learnMode;
+    }
+
+    public boolean isTestMode() {
+        return isTestMode;
+    }
+
+    public void setTestMode(boolean testMode) {
+        isTestMode = testMode;
     }
 
     public int getSublevelsPerEachEmotion() {
@@ -247,6 +302,22 @@ public class Level {
 
     public void setEmotions(List<Integer> emotions) {
         this.emotions = emotions;
+    }
+
+    public List<Integer> getPhotosOrVideosIdListInTest() {
+        return photosOrVideosIdListInTest;
+    }
+
+    public void setPhotosOrVideosIdListInTest(List<Integer> photosOrVideosIdList) {
+        this.photosOrVideosIdListInTest = photosOrVideosIdList;
+    }
+
+    public List<Integer> getEmotionsInTest() {
+        return emotionsInTest;
+    }
+
+    public void setEmotionsInTest(List<Integer> emotions) {
+        this.emotionsInTest = emotions;
     }
 
     public void addEmotion(int newEmotionId) {

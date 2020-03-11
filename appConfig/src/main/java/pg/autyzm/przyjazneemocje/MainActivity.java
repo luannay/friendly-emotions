@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             String plec = String.valueOf(spinner_plec.getSelectedItem());
 
 
-            if (plec.equals("kobietą") || plec.equals("female")) {
+            if (plec.equals("kobiety") || plec.equals("woman") || plec.equals("emotikona") || plec.equals("emoticon")) {
 
 
                 ArrayAdapter<CharSequence> dataAdapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.emotions_array_woman,
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 dataAdapter.notifyDataSetChanged(); //oraz to
                 spinner_emocje.setAdapter(dataAdapter);
             }
-            if (plec.equals("mężczyzną") || plec.equals("male")) {
+            if (plec.equals("mężczyzny") || plec.equals("man")) {
                 ArrayAdapter<CharSequence> dataAdapter2 = ArrayAdapter.createFromResource(MainActivity.this, R.array.emotions_array_man,
                         android.R.layout.simple_spinner_dropdown_item);
                 dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 spinner_emocje.setAdapter(dataAdapter2);
             }
 
-            if (plec.equals("dzieckiem") || plec.equals("child")) {
-                Toast.makeText(MainActivity.this, "woman", Toast.LENGTH_LONG);
+            if (plec.equals("dziecka") || plec.equals("child")) {
+                Toast.makeText(MainActivity.this, "child", Toast.LENGTH_LONG);
                 ArrayAdapter<CharSequence> dataAdapter3 = ArrayAdapter
                         .createFromResource(MainActivity.this, R.array.emotions_array_child,
                                 android.R.layout.simple_spinner_dropdown_item);
@@ -313,8 +313,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void setLevelActive(LevelItem level, boolean isChecked) {
-                updateActiveState(level.getLevelId());
+            public void setLevelActive(LevelItem level, boolean isChecked, boolean isLearnMode) {
+                updateActiveState(level.getLevelId(), isLearnMode);
             }
         });
 
@@ -322,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
         lView.setAdapter(adapter);
     }
 
-    private void updateActiveState(int levelId) {
+    private void updateActiveState(int levelId, boolean learnMode) {
         for (LevelItem levelItem : levelList) {
             int id = levelItem.getLevelId();
             Cursor cur2 = sqlm.giveLevel(id);
@@ -330,8 +330,10 @@ public class MainActivity extends AppCompatActivity {
             Cursor cur4 = sqlm.giveEmotionsInLevel(id);
 
             Level l = new Level(cur2, cur3, cur4);
-            l.setLevelActive(levelId == id);
-            levelItem.setActive(l.isLevelActive());
+            l.setLearnMode(levelId == id && learnMode);
+            l.setTestMode(levelId == id && !learnMode);
+            levelItem.setLearnMode(l.isLearnMode());
+            levelItem.setTestMode(l.isTestMode());
             sqlm.saveLevelToDatabase(l);
         }
         adapter.notifyDataSetChanged();
@@ -411,8 +413,8 @@ public class MainActivity extends AppCompatActivity {
             //String levelId = "Level " + cur.getInt(0);
 
             int active = cur.getInt(cur.getColumnIndex("is_level_active"));
-            boolean isLevelActive = (active != 0);
-            active_list.add(isLevelActive);
+            boolean isLearnMode = (active != 0);
+            active_list.add(isLearnMode);
             list.add(levelId);
 
         }
@@ -484,10 +486,9 @@ public class MainActivity extends AppCompatActivity {
                 int levelId = cur.getInt(0);
                 String name = cur.getString(cur.getColumnIndex("name"));
                 String displayName = levelId + " " + name;
-                int active = cur.getInt(cur.getColumnIndex("is_level_active"));
-                boolean isLevelActive = (active != 0);
-
-                levelList.add(new LevelItem(levelId, displayName, isLevelActive, levelList.size() > 3, levelList.size() > 3));
+                int isLearnMode = cur.getInt(cur.getColumnIndex("is_learn_mode"));
+                int isTestMode = cur.getInt(cur.getColumnIndex("is_test_mode"));
+                levelList.add(new LevelItem(levelId, displayName, (isLearnMode != 0), (isTestMode != 0), levelList.size() > 3, levelList.size() > 3));
             } while (cur.moveToNext());
         }
         cur.close();

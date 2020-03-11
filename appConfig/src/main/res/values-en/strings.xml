@@ -68,12 +68,13 @@
 
     <string name="tab4_test">Test</string>
     <string name="label1.1_test">Active materials</string>
+    <string name="the_same_material">I would like to use the same photos that are in the MATERIAL tab</string>
     <string name="label1.2_test">Number of tries for each emotion</string>
     <string name="label1.3_test">Time for response</string>
     <string name="description1_test">In the test mode, the child works on materials marked in the MATERIAL tab.</string>
     <string name="description2_test">
 The test mode does not use hints and reinforcements, the therapist should refrain from intervening in the interaction of the child until the end of the test.</string>
-    <string name="summary_test">Total number of tries in the test: 3</string>
+    <string name="summary_test">Total number of tries in the test:</string>
 
     <string name="tab5_save">Save</string>
     <string name="label1.1_save">Step name</string>
@@ -116,7 +117,7 @@ The test mode does not use hints and reinforcements, the therapist should refrai
     <string name="emotion_boredperson">bored</string>
 
 
-    <string name="sex">You are:</string>
+    <string name="sex">Photo of:</string>
 
     <string-array name="emotions_array">
         <item>happy</item>
@@ -163,13 +164,14 @@ The test mode does not use hints and reinforcements, the therapist should refrai
     </string-array>
 
     <string-array name="sex">
-        <item>female</item>
-        <item>male</item>
+        <item>woman</item>
+        <item>man</item>
         <item>child</item>
+        <item>emoticon</item>
 
     </string-array>
 
-    <string name="InPhoto">In the photo you will be:</string>
+    <string name="InPhoto">Emotion:</string>
 
 
 </resources>

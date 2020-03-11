@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
@@ -21,7 +20,6 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -171,7 +169,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         photosPerLvL = level.getPhotosOrVideosShowedForOneQuestion();
 
 
-        if (!level.isLevelActive()) return false;
+        if (!level.isLearnMode()) return false;
 
         // tworzymy tablice do permutowania
 
@@ -253,7 +251,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         // z tego co rozumiem w photosList powinny byc name wszystkich zdjec, jakie maja sie pojawic w lvl (czyli - 3 pozycje)
 
 
-        StartTimer(level);
+        if(level.isLearnMode()){
+            StartTimer(level);
+        } else if(level.isTestMode()){
+
+        }
 
 
            /* final Handler handler = new Handler();
@@ -312,12 +314,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50 - (150 / listSize), getResources().getDisplayMetrics());
 
         if(!videos) {
-
             height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 790 / listSize, getResources().getDisplayMetrics());
-
-        }
-        else {
-
+        } else {
             height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 450 / listSize, getResources().getDisplayMetrics());
         }
 
@@ -328,7 +326,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             String root = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
             File fileOut = new File(root + "FriendlyEmotions/Photos" + File.separator + photoName);
             try {
-
                 ImageView image = new ImageView(MainActivity.this);
                 image.setLayoutParams(lp);
 
@@ -346,8 +343,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 System.out.println("IO Exception " + photoName);
             }
         }
-
-
     }
 
 
@@ -364,7 +359,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 correctness = checkCorrectness();
             }
 
-            if (correctness) {
+            if (correctness && level.isLearnMode()) {
                 startAnimationActivity();
             } else {
                 startEndActivity(false);
@@ -377,9 +372,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     boolean checkCorrectness() {
-        if (wrongAnswersSublevel > level.getAmountOfAllowedTriesForEachEmotion()) {
-            return false;
+        if(level.isLearnMode()){
+            if (wrongAnswersSublevel > level.getAmountOfAllowedTriesForEachEmotion()) {
+                return false;
+            }
+        } else if(level.isTestMode()){
+            if (wrongAnswersSublevel > level.getNumberOfTriesInTest()) {
+                return false;
+            }
         }
+
         return true;
     }
 
@@ -477,12 +479,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         startActivityForResult(in, 2);
     }
 
-    private void StartTimer(Level l) {
+    private void StartTimer(final Level l) {
         //timer! seconds * 1000
         if (l.getTimeLimit() != 1) {
             final int hintTypes = l.getHintTypesAsNumber();
             final Context currentContext = this;
-            timer = new CountDownTimer(l.getTimeLimit() * 1000, 1000) {
+            timer = new CountDownTimer(level.isTestMode() ? l.getTimeLimitInTest(): l.getTimeLimit() * 1000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
                 }
@@ -500,7 +502,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         ImageView image = (ImageView) imagesLinear.getChildAt(i);
                         if (image.getId() != 1) { //eeee zmienilam 1 na 0
                             // if(hintTypes == 8 || hintTypes == 9 || hintTypes == 10 || hintTypes == 11 || hintTypes == 12 || hintTypes == 13 || hintTypes == 15) {
-                                image.setColorFilter(filter);
+                               if(l.isLearnMode()){
+                                   image.setColorFilter(filter);
+                               }
+
                             //  }
                             // } else {
 

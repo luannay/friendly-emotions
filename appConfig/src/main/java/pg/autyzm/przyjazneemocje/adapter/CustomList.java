@@ -17,7 +17,8 @@ import pg.autyzm.przyjazneemocje.R;
 public class CustomList extends BaseAdapter implements ListAdapter {
     private final List<LevelItem> list;
     private ILevelListCallback levelListCallback;
-    private int activeLevelPosition = -1;
+
+    private static final boolean LEARN_MODE = true;
 
     public CustomList(List<LevelItem> list, ILevelListCallback levelListCallback) {
         this.list = list;
@@ -53,9 +54,12 @@ public class CustomList extends BaseAdapter implements ListAdapter {
         listItemText.setText(levelItem.getName());
         ImageButton deleteBtn = view.findViewById(R.id.delete_btn);
         ImageButton editBtn = view.findViewById(R.id.edit_btn);
-        RadioButton activeChck = view.findViewById(R.id.active_chck);
-        activeChck.setOnCheckedChangeListener(null);
-        activeChck.setChecked(levelItem.isActive());
+        RadioButton modeLearn = view.findViewById(R.id.mode_learn);
+        RadioButton modeTest = view.findViewById(R.id.mode_test);
+        modeLearn.setOnCheckedChangeListener(null);
+        modeLearn.setChecked(levelItem.isLearnMode());
+        modeTest.setOnCheckedChangeListener(null);
+        modeTest.setChecked(levelItem.isTestMode());
         if (levelItem.isCanEdit()) {
             editBtn.setVisibility(View.VISIBLE);
         } else {
@@ -81,12 +85,21 @@ public class CustomList extends BaseAdapter implements ListAdapter {
                 notifyDataSetChanged();
             }
         });
-        activeChck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        modeLearn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 notifyDataSetChanged();
-                if (!levelItem.isActive()) {
-                    levelListCallback.setLevelActive(levelItem, isChecked);
+                if (!levelItem.isLearnMode()) {
+                    levelListCallback.setLevelActive(levelItem, isChecked, LEARN_MODE);
+                }
+            }
+        });
+        modeTest.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                notifyDataSetChanged();
+                if (!levelItem.isTestMode()) {
+                    levelListCallback.setLevelActive(levelItem, isChecked, !LEARN_MODE);
                 }
             }
         });

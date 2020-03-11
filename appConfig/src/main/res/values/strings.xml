@@ -66,11 +66,12 @@
 
     <string name="tab4_test">Test</string>
     <string name="label1.1_test">Aktywne materiały</string>
+    <string name="the_same_material">Chcę korzystać z tych samych zdjęć co w zakładce MATERIAŁ</string>
     <string name="label1.2_test">Liczba prób dla każdej emocji</string>
     <string name="label1.3_test">Czas na udzielenie odpowiedzi</string>
     <string name="description1_test">W trybie testu dziecko pracuje na materiałach zaznaczonych w zakładce MATERIAŁ.</string>
     <string name="description2_test">W trybie testu nie używa się podpowiedzi i wzmocnień, a terapeuta powinien powstrzymać się od interwencji w interakcje dziecka aż do zakończenia testu.</string>
-    <string name="summary_test">Łączna liczba prób w teście:    3</string>
+    <string name="summary_test">Łączna liczba prób w teście:</string>
 
     <string name="tab5_save">Zapisz</string>
     <string name="label1.1_save">Nazwa kroku</string>
@@ -115,10 +116,10 @@
     <string name="emotion_scaredperson">scared</string>
     <string name="emotion_boredperson">bored</string>
 
-    <string name="sex">Jesteś:</string>
+    <string name="sex">Zdjęcie:</string>
 
 
-    <string name="InPhoto">Na zdjęciu będziesz:</string>
+    <string name="InPhoto">Emocja:</string>
 
     <string-array name="emotions_array">
         <item>wesoły</item>
@@ -162,9 +163,10 @@
     </string-array>
 
     <string-array name="sex">
-        <item>kobietą</item>
-        <item>mężczyzną</item>
-        <item>dzieckiem</item>
+        <item>kobiety</item>
+        <item>mężczyzny</item>
+        <item>dziecka</item>
+        <item>emotikona</item>
 
     </string-array>
 

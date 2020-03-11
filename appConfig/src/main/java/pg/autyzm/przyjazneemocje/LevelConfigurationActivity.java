@@ -89,7 +89,9 @@ public class LevelConfigurationActivity extends AppCompatActivity {
         setLevel(new Level(cur2, cur3, cur4));
 
 
-
+        // 1 Material
+        EditText nrEmotions = (EditText) findViewById(R.id.nr_emotions);
+        nrEmotions.setText(String.valueOf(getLevel().getEmotions().size()));
 
         // 2 panel
 
@@ -194,11 +196,14 @@ public class LevelConfigurationActivity extends AppCompatActivity {
 
         // 4 panel
 
-       // EditText correctness = (EditText) findViewById(R.id.number_try_test);
-       // correctness.setText(getLevel().getAmountOfAllowedTriesForEachEmotion() + "");
+        CheckBox theSameMaterial = (CheckBox) findViewById(R.id.theSameMaterial);
+        theSameMaterial.setChecked(getLevel().isMaterialForTest());
 
         EditText timeLimit = (EditText) findViewById(R.id.number_time_test);
-        timeLimit.setText(getLevel().getTimeLimit() + "");
+        timeLimit.setText(getLevel().getTimeLimitInTest() + "");
+
+        TextView numberOfTriesInTest = (TextView) findViewById(R.id.numberOfTriesLabel);
+        numberOfTriesInTest.setText(getLevel().getNumberOfTriesInTest() + "");
 
         // panel 5
 
@@ -213,8 +218,8 @@ public class LevelConfigurationActivity extends AppCompatActivity {
     }
 
     private void createTabTest() {
-        createGridViewActiveInTest();
         activateNumberTimeTest();
+        activateNumberOfTriesInTest();
     }
 
     private void createTabConsolidation() {
@@ -256,17 +261,6 @@ public class LevelConfigurationActivity extends AppCompatActivity {
         editText.setText(name);
     }
 
-    private void createGridViewActiveInTest() {
-        ArrayList emotionList = new ArrayList();
-        for (int emotion : getLevel().getEmotions()) {
-            String emotionName = getEmotionNameInLocalLanguage(emotion);
-            emotionList.add(new CheckboxGridBean(emotionName, true));
-        }
-        GridView gridView = (GridView) findViewById(R.id.gridViewActiveInTest);
-        CheckboxGridAdapter adapter = new CheckboxGridAdapter(emotionList, getApplicationContext());
-        gridView.setAdapter(adapter);
-    }
-
     /**
     private void activateAddPraiseButton() {
 
@@ -304,6 +298,10 @@ public class LevelConfigurationActivity extends AppCompatActivity {
         activePlusMinus((EditText) findViewById(R.id.number_time_test), (Button) findViewById(R.id.button_minus_time_test), (Button) findViewById(R.id.button_plus_time_test));
     }
 
+    private void activateNumberOfTriesInTest() {
+        activePlusMinus((TextView) findViewById(R.id.numberOfTriesLabel), (Button) findViewById(R.id.numberOfTriesMinus), (Button) findViewById(R.id.numberOfTriesPlus));
+    }
+
     private void activateNumberTime() {
         activePlusMinus((EditText) findViewById(R.id.time), (Button) findViewById(R.id.button_minus_time), (Button) findViewById(R.id.button_plus_time));
     }
@@ -316,10 +314,13 @@ public class LevelConfigurationActivity extends AppCompatActivity {
         activePlusMinus((EditText) findViewById(R.id.number_photos), (Button) findViewById(R.id.button_minus_photos), (Button) findViewById(R.id.button_plus_photos));
     }
 
-    private void activePlusMinus(final EditText textLabel, final Button minusButton, final Button plusButton) {
+    private void activePlusMinus(final TextView textLabel, final Button minusButton, final Button plusButton) {
         minusButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                textLabel.setText(Integer.toString(Integer.parseInt(textLabel.getText().toString()) - 1));
+                int newValue = Integer.parseInt(textLabel.getText().toString()) - 1;
+                if(newValue > 0){
+                    textLabel.setText(Integer.toString(newValue));
+                }
             }
         });
 
@@ -392,7 +393,6 @@ public class LevelConfigurationActivity extends AppCompatActivity {
 
     private void updateSelectedEmotions(){
         createDefaultStepName();
-        createGridViewActiveInTest();
     }
 
     private void activeNumberEmotionPlusMinus() {
@@ -401,16 +401,19 @@ public class LevelConfigurationActivity extends AppCompatActivity {
         final Button minusButton = (Button) findViewById(R.id.button_minus);
         minusButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getLevel().deleteEmotion(0);
-                nrEmotions.setText(Integer.toString(getLevel().getEmotions().size()));
-                updateSelectedEmotions();
+                int newValue = getLevel().getEmotions().size() - 1;
+                if(newValue > 0) {
+                    getLevel().deleteEmotion(0);
+                    nrEmotions.setText(Integer.toString(newValue));
+                    updateSelectedEmotions();
+                }
             }
         });
 
         final Button plusButton = (Button) findViewById(R.id.button_plus);
         plusButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int newEmotionId=Integer.parseInt(nrEmotions.getText().toString());
+                int newEmotionId=Integer.parseInt(nrEmotions.getText().toString()) + 1;
                 getLevel().addEmotion(newEmotionId);
                 selectAllPictures(newEmotionId);
                 nrEmotions.setText(Integer.toString(getLevel().getEmotions().size()));
@@ -596,16 +599,20 @@ public class LevelConfigurationActivity extends AppCompatActivity {
 
         // 4 panel
 
-
         EditText timeLimit = (EditText) findViewById(R.id.number_time_test);
-        getLevel().setSecondsToHint(Integer.parseInt(timeLimit.getText() + ""));
+        getLevel().setTimeLimitInTest(Integer.parseInt(timeLimit.getText() + ""));
+
+        CheckBox materialLikeLearn = (CheckBox) findViewById(R.id.theSameMaterial);
+        getLevel().setMaterialForTest(materialLikeLearn.isChecked());
+
+        getLevel().setLearnMode(false);
+        getLevel().setTestMode(false);
+        getLevel().setNumberOfTriesInTest(Integer.parseInt(((TextView) findViewById(R.id.numberOfTriesLabel)).getText().toString()));
 
         // panel 5
 
         EditText levelName = (EditText) findViewById(R.id.step_name);
         getLevel().setName(levelName.getText() + "");
-
-
 
     }
 

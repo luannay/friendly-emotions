@@ -2,9 +2,14 @@ package pg.autyzm.graprzyjazneemocje.animation;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.animation.Animation;
+import android.widget.RelativeLayout;
 
+import java.util.Random;
+
+import pg.autyzm.graprzyjazneemocje.R;
 import pg.autyzm.graprzyjazneemocje.api.managers.AnimationBuilder;
 
 
@@ -22,6 +27,12 @@ public class AnimationActivity extends Activity implements Animation.AnimationLi
         super.onCreate(savedInstanceState);
         createView();
         anim.setAnimationListener(this);
+
+        Random rnd = new Random();
+        int currentStrokeColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+
+        RelativeLayout myLayout = (RelativeLayout) findViewById(R.id.activity_menu);
+        myLayout.setBackgroundColor(currentStrokeColor);
     }
 
     protected void createView() {
