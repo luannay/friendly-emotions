@@ -1,5 +1,6 @@
 package pg.autyzm.przyjazneemocje;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -41,6 +42,9 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 import static pg.autyzm.przyjazneemocje.lib.SqliteManager.getInstance;
 
 public class MainActivity extends AppCompatActivity {
+
+    private final int REQ_CODE_CAMERA = 100;
+    private CustomList adapter;
     private final List<LevelItem> levelList = new ArrayList<>();
     AdapterView.OnItemSelectedListener emotionSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
@@ -99,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> list;
     ArrayList<Boolean> active_list;
     String root = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
-    private CustomList adapter;
 
 
 
@@ -132,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         updateLevelList();
-        //generate list
+        //generate list   //przedtem zamiast list mieliśmy levelList
 
         sqlm.cleanTable("photos"); //TODO not clean and add, but only update
         sqlm.cleanTable("videos");
@@ -284,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
                 //bundle2.putString("SpinnerValue_Sex", spinner_sex.getSelectedItem().toString());
                 Intent in = new Intent(MainActivity.this, CameraActivity.class);
                 in.putExtras(bundle2);
-                startActivityForResult(in, 1);
+                startActivityForResult(in, REQ_CODE_CAMERA);
             }
         });
     }
@@ -301,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initAdapter() {
-        adapter = new pg.autyzm.przyjazneemocje.adapter.CustomList(levelList, new ILevelListCallback() {
+        adapter = new CustomList(levelList, new ILevelListCallback() {
             @Override
             public void editLevel(LevelItem level) {
                 openLevelConfigActivity(level.getLevelId());
@@ -332,6 +335,8 @@ public class MainActivity extends AppCompatActivity {
             Level l = new Level(cur2, cur3, cur4);
             l.setLearnMode(levelId == id && learnMode);
             l.setTestMode(levelId == id && !learnMode);
+            l.setLevelActive(levelId == id);
+            levelItem.setActive(l.isLevelActive());
             levelItem.setLearnMode(l.isLearnMode());
             levelItem.setTestMode(l.isTestMode());
             sqlm.saveLevelToDatabase(l);
@@ -485,10 +490,22 @@ public class MainActivity extends AppCompatActivity {
             do {
                 int levelId = cur.getInt(0);
                 String name = cur.getString(cur.getColumnIndex("name"));
-                String displayName = levelId + " " + name;
+                String displayName = levelId + ". ";
+                if (name.contains("::")) {
+                    if (sqlm.getCurrentLang().startsWith("pl")) {
+                        displayName += name.split("::")[0];
+                    } else {
+                        displayName += name.split("::")[1];
+                    }
+
+                } else {
+                    displayName += name;
+                }
+                int active = cur.getInt(cur.getColumnIndex("is_level_active"));
+                boolean isLevelActive = (active != 0);
                 int isLearnMode = cur.getInt(cur.getColumnIndex("is_learn_mode"));
                 int isTestMode = cur.getInt(cur.getColumnIndex("is_test_mode"));
-                levelList.add(new LevelItem(levelId, displayName, (isLearnMode != 0), (isTestMode != 0), levelList.size() > 3, levelList.size() > 3));
+                levelList.add(new LevelItem(levelId, displayName, isLevelActive, (isLearnMode != 0), (isTestMode != 0), levelList.size() > 3, levelList.size() > 3));
             } while (cur.moveToNext());
         }
         cur.close();
@@ -499,6 +516,14 @@ public class MainActivity extends AppCompatActivity {
             levelList.remove(0);
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (REQ_CODE_CAMERA == requestCode && resultCode == Activity.RESULT_OK) {
+            recreate();
+        }
     }
 }
 

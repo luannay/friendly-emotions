@@ -60,6 +60,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public Speaker speaker;
     boolean videos = false; //TODO: Get from database
 
+   // private String emotionToDisplay;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -287,6 +289,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     }
 
+///RÓŻNE EMOCJE - DLA DZIECKA I TAK COŚ NIE DZIAŁA?
+  /*  private String getEmotionForPl(int arrayId) {
+        String[] emotions = getResources().getStringArray(arrayId);
+        return emotions[new Random().nextInt(emotions.length - 1)];
+    }*/
+
     void generateView(List<String> photosList) {
 
         String rightEmotion = goodAnswer.replace(".jpg", "").replaceAll("[0-9.]", "");
@@ -294,6 +302,22 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if(!videos) {
             TextView txt = (TextView) findViewById(R.id.rightEmotion);
             String rightEmotionLang = getResources().getString(getResources().getIdentifier("emotion_" + rightEmotion, "string", getPackageName()));
+
+
+          /*  if (rightEmotionLang.startsWith("we")) {
+                rightEmotionLang = getEmotionForPl(R.array.happyEmotions);
+            } else if (rightEmotionLang.startsWith("sm")) {
+                rightEmotionLang = getEmotionForPl(R.array.sadEmotions);
+            } else if (rightEmotionLang.startsWith("zd")) {
+                rightEmotionLang = getEmotionForPl(R.array.surprisedEmotions);
+            } else if (rightEmotionLang.startsWith("zł")) {
+                rightEmotionLang = getEmotionForPl(R.array.angryEmotions);
+            } else if (rightEmotionLang.startsWith("pr")) {
+                rightEmotionLang = getEmotionForPl(R.array.scaredEmotions);
+            } else if (rightEmotionLang.startsWith("zn")) {
+                rightEmotionLang = getEmotionForPl(R.array.boredEmotions);
+            }*/
+
 
             if(level.getQuestionType().equals(Level.Question.SHOW_WHERE_IS_EMOTION_NAME))
                 commandText = getResources().getString(R.string.label_show_emotion) + " " + rightEmotionLang;
