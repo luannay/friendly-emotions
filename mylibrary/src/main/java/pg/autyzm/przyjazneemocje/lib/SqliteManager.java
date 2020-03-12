@@ -55,206 +55,6 @@ public class SqliteManager extends SQLiteOpenHelper {
         addEmotionsToDatabase();
         addDefaultLevels();
 
-        addLang(1, "pl", 1);
-        addLang(2, "en", 0);
-
-        Level level_easy_icons = new Level();
-        level_easy_icons.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level_easy_icons.setName("IKONY - 2 emocje:: ICONS - 2 emotions");
-        level_easy_icons.setTimeLimit(10);
-        ///przed tem   -   level_easy_icons.setPraises("dobrze");
-       //próbuję   ---
-        level_easy_icons.addPraise("dobrze");
-        level_easy_icons.addPraise("super");
-        level_easy_icons.setAmountOfAllowedTriesForEachEmotion(3);
-        level_easy_icons.setSublevelsPerEachEmotion(2);
-        level_easy_icons.setPhotosOrVideosShowedForOneQuestion(3);
-        level_easy_icons.setForTests(true);
-        level_easy_icons.setShouldQuestionBeReadAloud(false);
-        level_easy_icons.setQuestionType(Level.Question.EMOTION_NAME);
-
-
-        level_easy_icons.setEmotions(new ArrayList<Integer>() {
-            {
-                add(0);
-                add(1);
-            }
-        });
-        level_easy_icons.setPhotosOrVideosIdList(new ArrayList<Integer>() {
-            {
-                add(9);
-                add(10);
-                add(11);
-                add(16);
-                add(14);
-                add(15);
-            }
-        });
-
-        //ZlecenieIT
-        level_easy_icons.setLearnMode(true);
-        level_easy_icons.setTestMode(false);
-        level_easy_icons.setNumberOfTriesInTest(3);
-        level_easy_icons.setMaterialForTest(true);
-        level_easy_icons.setTimeLimitInTest(10);
-
-        saveLevelToDatabase(level_easy_icons);
-
-
-        Level level_easy_photos = new Level();
-        level_easy_photos.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level_easy_photos.setName("ZDJĘCIA - 2 emocje::Photos - 2 emotions");
-        level_easy_photos.setTimeLimit(10);
-        level_easy_photos.setPraises("dobrze");
-        level_easy_photos.setAmountOfAllowedTriesForEachEmotion(3);
-        level_easy_photos.setSublevelsPerEachEmotion(2);
-        level_easy_photos.setPhotosOrVideosShowedForOneQuestion(3);
-        level_easy_photos.setForTests(true);
-        level_easy_photos.setShouldQuestionBeReadAloud(true);
-        level_easy_photos.setQuestionType(Level.Question.EMOTION_NAME);
-
-        level_easy_photos.setEmotions(new ArrayList<Integer>() {
-            {
-                add(0);
-                add(1);
-            }
-        });
-        level_easy_photos.setPhotosOrVideosIdList(new ArrayList<Integer>() {
-            {
-                add(7);
-                add(6);
-                add(8);
-                add(12);
-                add(13);
-            }
-        });
-
-        //ZlecenieIT
-        level_easy_photos.setLearnMode(false);
-        level_easy_photos.setTestMode(false);
-        level_easy_photos.setNumberOfTriesInTest(3);
-        level_easy_photos.setTimeLimitInTest(10);
-        level_easy_photos.setMaterialForTest(true);
-
-        saveLevelToDatabase(level_easy_photos);
-
-        Level level_medium = new Level();
-        level_medium.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level_medium.setName("ZDJĘCIA - 4 emocje::Photos - 4 emotions");
-        level_medium.setTimeLimit(10);
-        level_medium.setPraises("dobrze");
-        level_medium.setPraises("wspaniale");
-        level_medium.setPraises("świetnie");
-        level_medium.setAmountOfAllowedTriesForEachEmotion(3);
-        level_medium.setPhotosOrVideosShowedForOneQuestion(3);
-        level_medium.setSublevelsPerEachEmotion(2);
-        level_medium.setForTests(true);
-        level_medium.setShouldQuestionBeReadAloud(true);
-        level_medium.setQuestionType(Level.Question.SHOW_EMOTION_NAME);
-        level_medium.setAmountOfEmotions(Integer.toString(level_medium.getEmotions().size()));
-
-        level_medium.setEmotions(new ArrayList<Integer>() {
-            {
-                add(0);
-                add(1);
-                add(4);
-                add(3);
-            }
-        });
-        level_medium.setPhotosOrVideosIdList(new ArrayList<Integer>() {
-            {
-                add(7);
-                add(6);
-                add(8);
-                add(12);
-                add(13);
-                add(1);
-                add(2);
-                add(3);
-                add(17);
-                add(18);
-            }
-        });
-
-        //ZlecenieIT
-        level_medium.setLearnMode(false);
-        level_medium.setTestMode(false);
-        level_medium.setNumberOfTriesInTest(3);
-        level_medium.setTimeLimitInTest(10);
-        level_medium.setMaterialForTest(true);
-
-        saveLevelToDatabase(level_medium);
-
-
-        Level level_difficult = new Level();
-        level_difficult.setPhotosOrVideosIdList(new ArrayList<Integer>());
-        level_difficult.setName("ZDJĘCIA - 6 emocji::Photos - 6 emotions");
-       /* if (getCurrentLang() == "en")
-            level_difficult.setName("PHOTOS - 6 emotions");
-        else if (getCurrentLang() == "pl")
-            level_difficult.setName("PHOTOS - 6 emotions pl");
-        else if (getCurrentLang() == "1")
-            level_difficult.setName("PHOTOS - 6 emotions 1");
-        else if (getCurrentLang() == "0")
-            level_difficult.setName("PHOTOS - 6 emotions 0");
-        else if (getCurrentLang().equals("2"))
-            level_difficult.setName("PHOTOS - 6 emotions 2");
-        else if (getCurrentLang().equals("0"))
-            level_difficult.setName("PHOTOS - 6 emotions 2");
-        else if (getCurrentLang().equals("1"))
-            level_difficult.setName("PHOTOS - 6 emotions 2");
-        else if (getCurrentLang().equals("en"))
-            level_difficult.setName("PHOTOS - 6 emotions 2");
-        else
-            level_difficult.setName("ZDJĘCIA - 6 emocji");*/
-
-        level_difficult.setTimeLimit(10);
-        level_difficult.setPraises("dobrze");
-        level_difficult.setPraises("good"); //chyba nie działa, trzebaby wszystko pousuwać i sprbować jeszcze raz
-        level_difficult.setAmountOfAllowedTriesForEachEmotion(3);
-        level_difficult.setSublevelsPerEachEmotion(2);
-        level_difficult.setPhotosOrVideosShowedForOneQuestion(3);
-        level_difficult.setForTests(true);
-        level_difficult.setShouldQuestionBeReadAloud(true);
-        level_difficult.setQuestionType(Level.Question.SHOW_WHERE_IS_EMOTION_NAME);
-        //level_difficult.setAmountOfEmotions("6");
-        level_difficult.setEmotions(new ArrayList<Integer>() {
-            {
-                add(0);
-                add(1);
-                add(2);
-                add(3);
-                add(4);
-                add(5);
-            }
-        });
-        level_difficult.setPhotosOrVideosIdList(new ArrayList<Integer>() {
-            {
-                add(7);
-                add(6);
-                add(8);
-                add(12);
-                add(13);
-                add(1);
-                add(2);
-                add(3);
-                add(17);
-                add(18);
-                add(4);
-                add(5);
-                add(19);
-            }
-        });
-
-        //trudne
-        level_difficult.setLearnMode(false);
-        level_difficult.setTestMode(false);
-        level_difficult.setNumberOfTriesInTest(3);
-        level_difficult.setTimeLimitInTest(10);
-        level_difficult.setMaterialForTest(true);
-
-        saveLevelToDatabase(level_difficult);
-
     }
 
 
@@ -314,6 +114,7 @@ public class SqliteManager extends SQLiteOpenHelper {
         values.put("name", level.getName());
         values.put("photos_or_videos_per_level", level.getPhotosOrVideosShowedForOneQuestion());
         values.put("time_limit", level.getTimeLimit());
+        values.put("is_level_active", level.isLevelActive());
         values.put("correctness", level.getAmountOfAllowedTriesForEachEmotion());
         values.put("sublevels_per_each_emotion", level.getSublevelsPerEachEmotion());
         values.put("is_for_tests", level.isForTests());
@@ -461,7 +262,11 @@ public class SqliteManager extends SQLiteOpenHelper {
 
     public Cursor giveAllLevels()
     {
-        Cursor cursor =  db.rawQuery("select * from levels", null);
+        //to zmienilo nazwy domyslne
+        Cursor cursor = db.rawQuery("select * from levels", null);
+        if (!cursor.moveToFirst()) {
+            addDefaultLevels();
+        }
         return cursor;
     }
 
@@ -491,7 +296,7 @@ public class SqliteManager extends SQLiteOpenHelper {
         db.execSQL("create table photos(" + "id integer primary key autoincrement," + "path int," + "emotion text," + "name text);" + "");
         db.execSQL("create table emotions(" + "id integer primary key autoincrement," + "emotion text);" + "");
         db.execSQL("create table levels(" + "id integer primary key autoincrement, photos_or_videos text, photos_or_videos_per_level int, " +
-                "time_limit int, is_learn_mode int, is_test_mode int, number_of_tries_in_test int, time_limit_in_test int, material_for_test int, name text, correctness int, sublevels_per_each_emotion int, is_for_tests int, question_type text, hint_types_as_number int, praises text, shouldQuestionBeReadAloud boolean);" + "");
+                "time_limit int, is_level_active boolean, is_learn_mode int, is_test_mode int, number_of_tries_in_test int, time_limit_in_test int, material_for_test int, name text, correctness int, sublevels_per_each_emotion int, is_for_tests int, question_type text, hint_types_as_number int, praises text, shouldQuestionBeReadAloud boolean);" + "");
         db.execSQL("create table levels_photos(" + "id integer primary key autoincrement,"  + "levelid integer references levels(id)," + "material_for_test integer," + "photoid integer references photos(id));" + "");
         db.execSQL("create table levels_emotions(" + "id integer primary key autoincrement," + "levelid integer references levels(id),"  + "material_for_test integer," + "emotionid integer references emotions(id));" + "");
         db.execSQL("create table videos(" + "id integer primary key autoincrement," + "path int," + "emotion text," + "name text);" + "");
@@ -608,6 +413,12 @@ public class SqliteManager extends SQLiteOpenHelper {
             }
         });
 
+        level_easy_icons.setLearnMode(true);
+        level_easy_icons.setTestMode(false);
+        level_easy_icons.setNumberOfTriesInTest(3);
+        level_easy_icons.setMaterialForTest(true);
+        level_easy_icons.setTimeLimitInTest(10);
+
         saveLevelToDatabase(level_easy_icons);
 
 
@@ -639,6 +450,12 @@ public class SqliteManager extends SQLiteOpenHelper {
                 add(13);
             }
         });
+
+        level_easy_photos.setLearnMode(false);
+        level_easy_photos.setTestMode(false);
+        level_easy_photos.setNumberOfTriesInTest(3);
+        level_easy_photos.setTimeLimitInTest(10);
+        level_easy_photos.setMaterialForTest(true);
 
         saveLevelToDatabase(level_easy_photos);
 
@@ -680,6 +497,12 @@ public class SqliteManager extends SQLiteOpenHelper {
                 add(18);
             }
         });
+
+        level_medium.setLearnMode(false);
+        level_medium.setTestMode(false);
+        level_medium.setNumberOfTriesInTest(3);
+        level_medium.setTimeLimitInTest(10);
+        level_medium.setMaterialForTest(true);
 
         saveLevelToDatabase(level_medium);
 
@@ -725,6 +548,12 @@ public class SqliteManager extends SQLiteOpenHelper {
                 add(19);
             }
         });
+
+        level_difficult.setLearnMode(false);
+        level_difficult.setTestMode(false);
+        level_difficult.setNumberOfTriesInTest(3);
+        level_difficult.setTimeLimitInTest(10);
+        level_difficult.setMaterialForTest(true);
 
         saveLevelToDatabase(level_difficult);
     }
