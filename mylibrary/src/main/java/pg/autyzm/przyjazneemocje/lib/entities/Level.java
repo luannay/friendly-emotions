@@ -14,6 +14,7 @@ import java.util.Map;
 public class Level {
 
     private int id;
+    private boolean isLevelActive;
 
     private String photosOrVideosFlag = "photos";
     private int timeLimit;
@@ -47,6 +48,7 @@ public class Level {
 
             setTimeLimit(cur.getInt(cur.getColumnIndex("time_limit")));
             setPhotosOrVideosShowedForOneQuestion(cur.getInt(cur.getColumnIndex("photos_or_videos_per_level")));
+            int active = cur.getInt(cur.getColumnIndex("is_level_active"));
 
             //
             setPraises(cur.getString(cur.getColumnIndex("praises")));
@@ -58,7 +60,7 @@ public class Level {
             setAmountOfAllowedTriesForEachEmotion(cur.getInt(cur.getColumnIndex("correctness")));
             setSublevelsPerEachEmotion(cur.getInt(cur.getColumnIndex("sublevels_per_each_emotion")));
 
-
+            setLevelActive((active != 0));
             setName(cur.getString(cur.getColumnIndex("name")));
             setQuestionType(Question.valueOf(cur.getString(cur.getColumnIndex("question_type"))));
             setHintTypesAsNumber(cur.getInt(cur.getColumnIndex("hint_types_as_number")));
@@ -207,6 +209,7 @@ public class Level {
         setPhotosOrVideosIdList(new ArrayList<Integer>());
         setEmotions(new ArrayList<Integer>());
         setLearnMode(true);
+        setLevelActive(false);
         setId(0);
 
     }
@@ -258,6 +261,15 @@ public class Level {
 
     public void setTestMode(boolean testMode) {
         isTestMode = testMode;
+    }
+
+    public boolean isLevelActive() {
+        return isLevelActive;
+    }
+
+
+    public void setLevelActive(boolean levelActive) {
+        isLevelActive = levelActive;
     }
 
     public int getSublevelsPerEachEmotion() {

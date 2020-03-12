@@ -33,4 +33,41 @@
 
     <string name="failed_level">Nie udało Ci się rozpoznać wszystkich emocji. Spróbuj ponownie</string>
     <string name="title_activity_level_failed">LevelFailedActivity</string>
+<!--
+    <array name="happyEmotions">
+        <item>wesoła</item>
+        <item>wesoły</item>
+        <item>wesołe</item>
+    </array>
+
+    <array name="sadEmotions">
+        <item>smutna</item>
+        <item>smutny</item>
+        <item>smutne</item>
+    </array>
+
+    <array name="surprisedEmotions">
+        <item>zdziwiona</item>
+        <item>zdziwiony</item>
+        <item>zdziwione</item>
+    </array>
+
+    <array name="angryEmotions">
+        <item>zła</item>
+        <item>zły</item>
+        <item>złe</item>
+    </array>
+
+    <array name="scaredEmotions">
+        <item>przestraszona</item>
+        <item>przestraszony</item>
+        <item>przestraszone</item>
+    </array>
+
+    <array name="boredEmotions">
+        <item>znudzony</item>
+        <item>znudzona</item>
+        <item>znudzone</item>
+    </array>
+    -->
 </resources>
