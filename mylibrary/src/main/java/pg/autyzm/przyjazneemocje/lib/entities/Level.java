@@ -13,6 +13,8 @@ import java.util.Map;
  */
 public class Level {
 
+
+
     private int id;
     private boolean isLevelActive;
 
@@ -218,6 +220,8 @@ public class Level {
     public int getId() {
         return id;
     }
+
+
 
     public void setId(int id) {
         this.id = id;

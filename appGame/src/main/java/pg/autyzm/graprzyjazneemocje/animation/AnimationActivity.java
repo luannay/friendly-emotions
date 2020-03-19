@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import java.util.Random;
 
 import pg.autyzm.graprzyjazneemocje.R;
+import pg.autyzm.graprzyjazneemocje.RewardActivity;
 import pg.autyzm.graprzyjazneemocje.api.managers.AnimationBuilder;
 
 
@@ -21,18 +22,24 @@ public class AnimationActivity extends Activity implements Animation.AnimationLi
 
     protected Animation anim;
 
-
+RewardActivity rewardMode = new RewardActivity();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         createView();
         anim.setAnimationListener(this);
 
-        Random rnd = new Random();
-        int currentStrokeColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+       Random rnd = new Random();
+       int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+
+        Intent intent = getIntent();
+       int currentStrokeColor = intent.getIntExtra("color",0);
+
+        System.out.println("AnimationActivity - color:" + currentStrokeColor);
+        System.out.println("AnimationActivity - colorRANDOM:" + color);
 
         RelativeLayout myLayout = (RelativeLayout) findViewById(R.id.activity_menu);
-        myLayout.setBackgroundColor(currentStrokeColor);
+        myLayout.setBackgroundColor(color);
     }
 
     protected void createView() {
@@ -42,7 +49,7 @@ public class AnimationActivity extends Activity implements Animation.AnimationLi
     }
 
     @Override
-    public void onAnimationStart(Animation animation) {
+        public void onAnimationStart(Animation animation) {
     }
 
     @Override

@@ -30,6 +30,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".RewardActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".animation.AnimationActivity"
             android:screenOrientation="landscape" />
         <activity

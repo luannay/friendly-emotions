@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
@@ -21,6 +22,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.j256.ormlite.android.AndroidDatabaseConnection;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,6 +50,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     Cursor cur0;
     Cursor videoCursor;
     SqliteManager sqlm;
+    int reward;
     int wrongAnswers;
     int rightAnswers;
     int wrongAnswersSublevel;
@@ -295,6 +299,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return emotions[new Random().nextInt(emotions.length - 1)];
     }*/
 
+    public String getGoodAnswer() {
+        return goodAnswer;
+    }
+
     void generateView(List<String> photosList) {
 
         String rightEmotion = goodAnswer.replace(".jpg", "").replaceAll("[0-9.]", "");
@@ -302,7 +310,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if(!videos) {
             TextView txt = (TextView) findViewById(R.id.rightEmotion);
             String rightEmotionLang = getResources().getString(getResources().getIdentifier("emotion_" + rightEmotion, "string", getPackageName()));
-
+            /*Intent intentEmotion = new Intent();
+        intentEmotion.putExtra("emotion", rightEmotionLang);*/
+            System.out.println("Emocja Ani: " + rightEmotionLang);
 
           /*  if (rightEmotionLang.startsWith("we")) {
                 rightEmotionLang = getEmotionForPl(R.array.happyEmotions);
@@ -315,6 +325,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             } else if (rightEmotionLang.startsWith("pr")) {
                 rightEmotionLang = getEmotionForPl(R.array.scaredEmotions);
             } else if (rightEmotionLang.startsWith("zn")) {
+                rightEmotionLang = getEmotionForPl(R.array.boredEmotions);
                 rightEmotionLang = getEmotionForPl(R.array.boredEmotions);
             }*/
 
@@ -355,6 +366,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                 if (photoName.contains(rightEmotion)) {
                     image.setId(1);
+
+                    System.out.println("ZDJECIE " + photoName);
+                    System.out.println("getGoodAnswer:" + getGoodAnswer());
                 } else {
                     image.setId(0);
                 }
@@ -384,7 +398,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
 
             if (correctness && level.isLearnMode()) {
-                startAnimationActivity();
+                //Anianagroda:
+                startRewardActivity();
+
+               //AniaNagroda: Intent intentRefresh = getIntent();
+                //AniaNagroda: if ((intentRefresh.getIntExtra("animationStart",1)) == 1)
+                    //było: startAnimationActivity();
+
             } else {
                 startEndActivity(false);
             }
@@ -452,6 +472,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case 1:
+                String praises = level.getPraises();
+                System.out.println("praises: " + praises);
+                    startAnimationActivity();
+                break;
+            case 2:
                 animationEnds = true;
 
                 if (!findNextActiveLevel()) {
@@ -466,7 +491,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
                 break;
-            case 2:
+            case 3:
 
 
                 java.util.Collections.shuffle(sublevelsList);
@@ -485,13 +510,78 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
+
+
+    private void startRewardActivity() {
+
+
+
+
+      Intent intentReward = new Intent(MainActivity.this,RewardActivity.class);
+        if(level.getQuestionType().equals(Level.Question.SHOW_WHERE_IS_EMOTION_NAME))
+            commandText = "! To jest" ;
+        else if(level.getQuestionType().equals(Level.Question.SHOW_EMOTION_NAME))
+            commandText = ", " ;
+        else if(level.getQuestionType().equals(Level.Question.EMOTION_NAME))
+            commandText = ", ";
+
+        intentReward.putExtra("praise", commandText);
+
+        String rightEmotion = goodAnswer.replace(".jpg", "").replaceAll("[0-9.]", "");
+        String emotion = getResources().getString(getResources().getIdentifier("emotion_" + rightEmotion, "string", getPackageName()));
+        intentReward.putExtra("emotion", emotion);
+String photoName = getGoodAnswer().replace(".jpg","");
+
+
+        ///ADDING A PHOTO TO AN INTENT - VERSION WITHOUT DRAWABLES
+
+                    String root = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
+                    final File path = new File(root + "FriendlyEmotions/Photos" + File.separator);
+
+
+                    String fileName =(path + photoName + ".jpg");
+
+                    intentReward.putExtra("fileName",fileName);
+
+
+
+
+        //DZIAŁA DLA DRAWABLES:
+       int id = getResources().getIdentifier("pg.autyzm.graprzyjazneemocje:drawable/" + photoName, null, null);
+         intentReward.putExtra("photoId", id);
+        System.out.println("photoId:" + id);
+
+
+
+        ///WYPOWIADANE POCHWAŁY
+        String praises = level.getPraises();
+        System.out.println("praises: " + praises);
+        intentReward.putExtra("praises",praises);
+
+
+       /* String root = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
+        final File path = new File(root + "FriendlyEmotions/Photos" +File.separator);
+        String photoLocation = path + "/" + getGoodAnswer();
+       intentReward.putExtra("photoPath",photoLocation);
+
+
+        System.out.println("photoName:" + photoName);
+        System.out.println("photoPath: " + photoLocation);*/
+startActivityForResult(intentReward,1);
+
+    }
+
     private void startAnimationActivity() {
         if(speaker == null) {
             speaker = Speaker.getInstance(MainActivity.this);
         }
+        Intent intent = getIntent();
+        int currentStrokeColor = intent.getIntExtra("color",0);
         Intent i = new Intent(MainActivity.this, AnimationActivity.class);
-        i.putExtra("praises", level.getPraises());
-        startActivityForResult(i, 1);
+        //i.putExtra("praises", level.getPraises());
+        i.putExtra("color",currentStrokeColor);
+        System.out.println("MainActivity - color" + currentStrokeColor);
+        startActivityForResult(i, 2);
     }
 
     private void startEndActivity(boolean pass) {
@@ -500,7 +590,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         in.putExtra("WRONG", wrongAnswers);
         in.putExtra("RIGHT", rightAnswers);
         in.putExtra("TIMEOUT", timeout);
-        startActivityForResult(in, 2);
+        startActivityForResult(in, 3);
     }
 
     private void StartTimer(final Level l) {

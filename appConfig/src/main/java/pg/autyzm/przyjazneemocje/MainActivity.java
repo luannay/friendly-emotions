@@ -313,6 +313,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void removeLevel(LevelItem level) {
                 deleteLevel(level.getLevelId());
+                level.reduceLevelId();
             }
 
             @Override

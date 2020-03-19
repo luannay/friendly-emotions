@@ -9,6 +9,10 @@ public class LevelItem {
     private boolean canEdit;
     private boolean canRemove;
 
+    public void reduceLevelId() {
+        this.levelId--;
+    }
+
     public LevelItem(int levelId, String name, boolean isActive, boolean isLearnMode, boolean isTestMode, boolean canEdit, boolean cenRemove) {
         this.levelId = levelId;
         this.name = name;
